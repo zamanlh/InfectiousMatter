@@ -1,0 +1,334 @@
+<html>
+	<head>
+		  <style>
+				#graphDiv {
+				  width: 300;
+				  height: 300; 
+				  overflow: hidden; 
+				  padding: 0;
+				  margin: 0;
+				  background-color: #d8d8d8;
+				  visibility: hidden;
+				}
+				#matterDiv {
+				  width: 300;
+				  height: 300; 
+				  padding: 0;
+				  margin: 0;
+				  float: left;
+				}
+				#histDiv {
+				  width: 300;
+				  height: 200;
+				  padding: 0;
+				  margin: 0;
+				  float: left;
+				}
+				#plotDiv {
+				  width: 300;
+				  height: 300;
+				  padding: 0;
+				  margin: 0;
+				  float: left;
+				}
+				div.row {
+					width: 98vw;
+					height: 400;
+				}
+				div.simSpacer {
+					height: 400;
+					width:100%;
+				}
+		</style>
+		<link rel="stylesheet" href="assets/css/uikit.min.css">
+		<link rel="stylesheet" href="assets/css/slider_style.css">
+
+	</head>
+	<body>
+
+	<div class="uk-flex uk-container"> 
+
+		<div class="uk-width-5-6 uk-flex-left uk-padding-small">
+
+			<div uk-height-viewport>
+
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">
+				    	Developing an Intuition for Pandemics
+
+				    </a></h1> 
+
+				    <p class="uk-text-lead"  id="page1" uk-scrollspy="repeat: true">
+
+				    </p>
+				    <p>
+				    	When you hear an emergency traffic report, you have an idea of how that news is going to affect your plans (when we still had plans, anyway). We have an intuition for the way traffic works and fits in with our daily routines, but we didn't get that intuition from just listening to traffic reports. Actually sitting in our car bumper-to-bumper taught us to plan ahead for road closures and generally when to avoid the highway. 
+				    </p>
+
+				    <p>
+				    	We don't have that intuition for pandemics yet, but we do have a lot of pandemic reports.
+				    </p>
+
+				    <p>
+				    	What if you could watch virtual epidemics unfold directly in your web browser to build that intuition rather than waiting around and learning by making mistakes and dealing with their fallout? Imagine if new pandemic plans and policies came with an interactive simulation that demonstrated (at least virtually) their intended consequences.
+				    </p>
+
+				    <p>
+						<div class="uk-cover-container uk-box-shadow-medium" uk-scrollspy="cls: uk-animation-fade; repeat: true;">
+							<img data-src="assets/img/teaser.png" uk-img>
+						</div>
+				    </p>
+
+				    <p class="uk-align-bottom">
+				    	<span class="uk-label uk-label-warning">disclaimer</span>  I am not an Epidemiologist or Public Health expert. This is not designed to be a predictive simulation of COVID-19. It is a simple model to understand and visualize basic disease dynamics. 
+				    </p>
+
+				    <br/><br/>
+				</article>
+			</div>
+
+			<div uk-height-viewport>
+
+			    <p class="uk-text-lead">Why I Made This</p>
+			    <div class="">
+					<img class="uk-box-shadow-large uk-align-left uk-height-large" data-src="assets/img/lz_greenhouse_small.jpeg" uk-scrollspy="cls: uk-animation-slide-left; repeat: true; offset-top: -200" uk-img>
+				</div>
+
+				<div class="">
+				    <p>
+			    		<a class="uk-link-muted" href="https://zeeelab.com/">I'm an Assistant Professor at the University of Michigan</a> in the Ecology and Evolutionary Biology department, and the Center for the Study of Complex Systems. I study how coevolution between hosts and their pathogens drive really fascinating ecological and evolutionary dynamics. In the Fall, I'll be teaching a new course on the Ecology and Evolution of Infectious Disease. 
+			    	</p>
+			    	<p>
+			    		I've always believed that hands-on learning is the best way to build intuition about complex topics, and that's something I'm planning to bring to my course in the fall. I'm also a big fan of simulations. That's true for the classes I teach, as well as in my own research. 
+			    	</p>
+
+			    	<p>
+			    		There are a lot of great resources for scientists interested in studying disease dynamics, and several good simulation frameworks that are geared towards teaching broadly about disease transmission. I spent some time looking for something that would run in web browsers, so that students could get right into experimenting without having the universally loathed class period dedicated to installing software. Unfortunately, I didn't find a simulation with the right mix of simplicity (to get rid of so many of the complicated bits) and flexibility (to add in the bits that might be important) for this course.
+			    	</p>
+			    	<p>
+			    		So, I built it. Keep scrolling to learn more about it. 
+			    	</p><br/>
+		    	</div>
+			</div>
+			
+			<div id="simContainer" uk-sticky="offset: 0" class="uk-align-center uk-width-1-1" style="background: rgba(255, 255, 255, 0.95); z-index: 100" >
+				<div class="uk-align-center" style="height:300; width:900;" >
+					<div class="" id="plotDiv"></div>
+					<div class="" uk-scrollspy="cls: uk-animation-slide-right; repeat: true;" id="matterDiv"></div>
+					<div class="" uk-scrollspy="cls: uk-animation-slide-right; repeat: true" id="graphDiv"></div>
+
+				</div>
+			</div>
+
+			<div uk-height-viewport>
+
+				<article class="uk-article">
+				<div ></div>
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Simple Agents in a Simple World</a></h1>
+
+				    <p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: 500;">Each circle is an "Agent"</p>
+
+				    <p>
+				    	An agent is just another word for an <b>Individual</b> in the simulation. In this world, agents are drawn as circles and move around in their world randomly. If they wander too far in one direction, they loop back around on the other end of the world. 
+				    </p>
+				    <p> 
+				    	Sometimes the agents bump into each other. It might help to imagine that represents seeing someone in an elevator, visiting a friend, or actually physically bumping into someone. In any case, we'll call these events <b>Contacts</b>.
+				    </p>
+
+				</article>
+			</div>
+
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Infection</a></h1>
+
+				    <p class="uk-text-lead" id="page3" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: -200">We can expose a few organisms in this population</p>
+
+				    <p>
+				    	First you'll see agents with a small orange border. Those are <b>Exposed</b> individuals, after some time they'll become <b>Infected</b> and turn red. The Infected agents are contagious, and if they bump into <b>Susceptible</b> (black border) agents, there is a chance they'll transmit the disease. Eventually, Infected organisms will recover and develop resistance to the disease. You'll see these <b>Recovered</b> agents with a green border in the simulation. We would call this, then, an Agent Based version of a traditional <b>Susceptible, Exposed, Infectious, Recovered</b> (SEIR) model.
+				    </p>
+				    	Now, it's a little hard to see all the different colored borders on the agents, so lets start plotting what's going on in the population.
+				    <p>
+				    	Scroll on to see the plot!
+				    </p>
+
+				</article>
+			</div>
+
+
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Plotting</a></h1>
+
+				    <p class="uk-text-lead" id="page4" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: -200">Because those little borders are hard to count</p>
+
+				    <p>
+				    	Now that we have a plot, we also can see the timescale of the simulation. We could make the agents move faster or slower, depending on how much "physical distancing" we're trying to model. We could also increase or decrease the population size to simulate differences in location density. You'll get to play with these parameters in the full simulation later!
+					</p>
+
+				</article>
+			</div>
+
+			<div uk-height-viewport >
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Multiple Locations</a></h1>
+
+				    <p class="uk-text-lead" id="page5" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: -200">We don't all live in one little box!</p>
+
+				    <p>
+				    	We, like most other organisms on earth, don't live in one big population. Instead we are spread across space in different cities or towns, and live in different neighborhoods or complexes. We model these sorts of things as a <b>Metapopulation</b>, where several subpopulations are connected through <b>Migration</b> of individuals. Migration in this abstract sense could represent visiting your friend in a neighboring city, for example. 
+				    </p>
+				    <p>
+				    	The outcome of this simulation is <b>Stochastic</b>, which means every time you run it you might see something different. Maybe the disease spread slowly through each subpopulation, and you saw a prolonged (but flat) infected curve. Or maybe you saw multiple infection peaks as the disease spread quickly in multiple subpopulations at different times. When we are modeling disease dynamics, it's important to get a sense of the range of possible outcomes and how likely they are. 
+				    </p>
+
+				</article>
+			</div>
+
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Contact Graph</a></h1>
+
+				    <p class="uk-text-lead">(The 7 Degrees of Disease Transmission)</p>
+				    <div id="page6" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: -200"></div>
+				    <p>
+				    	One of the really neat features of agent based models is that we can keep track of information about each individual in the simulation. This lets us track, for example, who interacted with each other over some period of time. As you might imagine for disease transmission, this could be an incredibly useful bit of information. 
+				    </p>
+				     <p>
+				    	We can represent these contacts with a <b>Graph</b>. Every node (colored square) in the rightmost visualization depicts one of the agents in the metapopulation. An edge (the line drawn between two nodes) represents a contact that happened within the last 7 days of the simulation.
+				    </p>
+				    <p>
+				    	You'll notice the agents form the same subpopulation tend to be more connected to each other than agents from other locations. You might hear these structures in graphs called <b>Modules</b> or <b>Communities</b>. 
+				    </p>
+
+				</article>
+		
+   			</div>
+
+   			<div uk-height-viewport >
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">City and Countryside</a></h1>
+
+				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true; offset-top: -200">Dense cities and more isolated rural areas are connected, and change the dynamics of disease spread</p>
+
+				    <p>
+				    	As an example, lets make a metapopulation simulation of a metropolitan area. In a typical metropolitan area, there is a densely populated city surrounded by lower density towns and rural areas. Here, the dense city is in the top left (purple) and the density decreases as we move down and to the right.  
+				    </p>
+
+				    <p>
+				    	You can easily see the effect of density on the contact graph, where the large city is a tight-knit network, and the lower density locations have more tendrils.
+				    </p>
+				    
+				    <p>
+				    	Thanks to <a href="https://www.pnas.org/content/102/32/11157" target="_blank" class="uk-link-muted">some fantastic work</a> by network scientists and epidemiologists, we know that disease dynamics in metapopulations are more likely to have multiple waves (or <b>peaks</b>) of infection, and more variation in how long it takes to resolve an epidemic. <a href="https://www.medrxiv.org/content/10.1101/2020.04.15.20064980v1.full.pdf" target="_blank" class="uk-link-muted">A recent (not yet peer-reviewed) pre-print </a> also highlights the role of density in metapopulations on the intensity of COVID-19. Counterintuitively, lower density locations had more intense outbreaks, with most of the infections happening in a relatively short period of time. This observation is critical for our next steps in pandemic policy making. 
+				    </p>
+				    <p>
+				    	Keep scrolling for an interactive exercise! 
+				    </p>
+
+				    </article>
+			</div>
+
+			<div uk-height-viewport>
+				<article class="uk-article uk-height-large">
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Protecting Our Small Towns</a></h1>
+				    <p>
+				    	Smaller and rural towns are preparing for a battle, but they do not have the same pool of resources that large cities have been mobilizing. People may not have easy access to hospitals, and many of the satellite hospital systems that typically service these locations don't have the required ICUs or equipment to treat COVID-19 patients. There are several good articles about these and concerns and more <a href="https://www.statnews.com/2020/04/16/rural-communities-coronavirus-toll/" target="_blank" class="uk-link-muted">here</a>, <a href="https://www.vox.com/2020/4/28/21239536/coronavirus-georgia-south-dakota-missouri-nebraska-rural-america" target="_blank" class="uk-link-muted">here</a>, and <a href="https://www.princeton.edu/news/2020/04/16/princeton-researchers-map-rural-us-counties-most-vulnerable-covid-19" target="_blank" class="uk-link-muted">here</a>.
+				    </p>
+
+				    <p>
+				    	To get an intuition about how limiting movement between the cities and rural areas affects disease dynamics, try experimenting with the slider and see what happens when there is a lot of movement.  
+				    </p>
+
+				    <div class="uk-container uk-flex">
+				    	<p class="uk-margin-right"><b>Visitors Per Day:</b>
+						    <div class="uk-form-width-medium">
+								<input id="migrationSlider" class="slider" type="range" min=0 max=30 step=1 value=3>
+							</div>
+						</p>
+
+						<div class="uk-form-width-medium uk-margin-left">
+							<span id="migrationBadge" class="uk-badge uk-badge-notification">
+								3
+							</span>
+						</div>
+					</div>
+					
+					<p>
+						If you cranked up the number of visitors, you probably saw an effect on the contact network and watched only a single peak of infections that hit the high and low density locations at similar times.
+					</p>
+
+					<p>
+						Now, try keeping movement limited to just a few visitors. You'll probably see a more spread out peak, and maybe even multiple peaks as the epidemic is no longer <b>synchronized</b> between locations. 
+					</p>
+
+					<p>
+				    	Try running the simulation a few times to get a sense of the possible outcomes!
+				    </p>
+
+					<button id="restart_btn" class="uk-button uk-button-secondary" href="">
+						Restart Simulation
+					</button> 
+					 <br/><br/>
+					 <p class="uk-text-lead">How Do We Help?</p>
+
+					<p>
+						Remember that larger cities have most of the equipment and ICUs required to treat COVID-19. When the peaks are spread out or shifted in time, those hospitals can treat more patients coming from rural areas. If the small towns and big cities are synchronized, the hospital system will be far beyond capacity from the start.
+					</p>
+
+					<p>
+						While we're waiting for therapies for COVID-19, the best we can do is take physical distancing and stay-home orders seriously. Even when it seems like things are improving, or when our community hasn't had an outbreak yet, we are still protecting the spread beyond current hotspots into more vulnerable communities. 
+					</p>
+
+				</article>
+
+				<div uk-height-viewport>
+
+				</div>
+
+			</div>
+			<div class="uk-padding-large" >
+				<p class="uk-text-lead uk-padding-large">There are even more configuration options in the full simulator!</p>
+
+				<div style="height: 200;" class="uk-container uk-padding-medium">
+					<a class="uk-button uk-button-primary uk-button-large uk-align-center" href="https://infectiousmatter.com/fullsim"> 
+						Launch Full Simulator 
+					</a>
+				</div>
+				<div class="uk-card uk-card-default uk-card-body">
+					<h3 class="uk-card-title">Shout Outs</h3>
+					I want to thank my friends and colleagues that helped, you all were instrumental. Particular shout out to <a href="https://azjacobs.com/" target="_blank" class="uk-link-muted">Abbie Jacobs</a>, <a href="https://sites.lsa.umich.edu/scottepage/" target="_blank" class="uk-link-muted">Scott E. Page</a>, <a href="http://scarpino.github.io/" target="_blank" class="uk-link-muted">Samuel Scarpino</a>, <a href="https://medium.com/ogplexus" target="_blank" class="uk-link-muted">C. Brandon Ogbunu</a> and <a href="https://www.shanedubay.com/" target="_blank" class="uk-link-muted">Shane DuBay</a>.
+				</div>
+			</div>
+
+		</div>
+
+
+			
+		<div class="uk-width-1-6 uk-flex-column uk-margin-xlarge-top">
+		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset:500" uk-sticky="offset: 50">
+	    		<li><a href="#page1">Introduction</a></li>
+	    		<li><a href="#page2">Simple Agents</a></li>
+	    		<li><a href="#page3">Infections</a></li>
+	    		<li><a href="#page4">Plots</a></li>
+	    		<li><a href="#page5">Metapopulations</a></li>
+	    		<li><a href="#page6">Contact Graphs</a></li>
+	    		<li><a href="#page7">Example: Cities and Countryside</a></li>
+
+
+			</ul>
+
+		</div>
+
+
+	</div>
+	<script src="bundle.min.js" charset="UTF-8"></script>
+	</body>
+</html>

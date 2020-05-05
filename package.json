@@ -1,0 +1,39 @@
+{
+  "name": "infections_matter",
+  "version": "1.0.0",
+  "description": "matter.js based simulation of SEIR metapopulations",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "@node-minify/uglify-es": "^5.3.0",
+    "dat.gui": "^0.7.7",
+    "fastpriorityqueue": "^0.6.3",
+    "jstat": "^1.9.2",
+    "matter-collision-events": "^0.1.7",
+    "matter-js": "^0.14.2",
+    "matter-wrap": "^0.2.0",
+    "node-minify": "^3.6.0",
+    "node-sass": "^4.14.1",
+    "plotly.js": "^1.54.0",
+    "uglify-es": "^3.3.9",
+    "uikit": "^3.4.2",
+    "uniqid": "^5.2.0",
+    "vivagraphjs": "^0.12.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify simple_sim.js -o bundle.js",
+    "watch": "watchify simple_sim.js -o bundle.js",
+    "minify": "browserify simple_sim.js "
+  },
+  "author": "Luis Zaman",
+  "license": "CC-BY-NC-SA-4.0"
+}
