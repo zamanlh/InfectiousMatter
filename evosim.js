@@ -54,7 +54,7 @@ window.onload = function() {
         pop_size: 20,
         num_to_infect: 2,
         num_visitors: 0,
-        residence_size: 250,
+        residence_size: 300,
         residence_padding: 20
 
     };
@@ -130,8 +130,7 @@ window.onload = function() {
         container: document.getElementById('graphDiv'),
         graphics: viva_graphics,
         renderLinks: true,
-        layout: viva_layout,
-        interactive: 'node drag'
+        layout: viva_layout
 
     });
     viva_renderer.run();
@@ -243,7 +242,7 @@ window.onload = function() {
           y: [0],
           stackgroup: 'one',
           name: "Recovered",
-          marker: { color: "green" }
+          marker: { color: "blue" }
         };
 
         let susceptible = {
@@ -254,7 +253,7 @@ window.onload = function() {
             marker: { color: "grey" }
         }
 
-        let plot_data = [exposed, infected, recovered, susceptible];
+        let plot_data = [exposed, in300fected, recovered, susceptible];
 
         return plot_data;
 
@@ -279,156 +278,31 @@ window.onload = function() {
     };
 
 
-    UIkit.util.on("#migrationSlider", 'input', function(e) {
-        let badge = document.getElementById('migrationBadge');
-        badge.innerHTML = e.target.value;
-
-        world_params.num_visitors = e.target.value;
-
-    });
-
-    let boundry_check = false;
-
-
-    UIkit.util.on("#page1", 'inview', function(e) {
-        //clear_simulation();
-        document.getElementById('graphDiv').style.visibility = "hidden";
-        document.getElementById('plotDiv').style.visibility = "hidden";
-
-    });
-
-    UIkit.util.on("#page2", 'inview', function(e) {
-        document.getElementById('graphDiv').style.visibility = "hidden";
-        document.getElementById('plotDiv').style.visibility = "hidden";
-
-        clear_simulation();
-        world_params.pop_size = 11 
-        world_params.num_residences = 1;
-        world_params.num_visitors = 0;
-        world_params.residence_size = 300 - world_params.residence_padding*2;
-        world_params.num_to_infect = 0;
-
-        reset_population();
-
-    });
-
-
-    UIkit.util.on("#page3", 'inview', function(e) {
-        document.getElementById('graphDiv').style.visibility = "hidden";
-        document.getElementById('plotDiv').style.visibility = "hidden";
-
-        clear_simulation();
-        world_params.pop_size = 100; 
-        world_params.num_residences = 1;
-        world_params.residence_size = 300 - world_params.residence_padding*2;
-        world_params.num_to_infect = 5;
-        world_params.num_visitors = 0;
-
-        reset_population();
-        InfectiousMatterSim.infection_params.per_contact_infection = 1.0;
-
-
-        document.getElementById('plotDiv').style.visibility = "hidden";
-        Plotly.newPlot('plotDiv', get_fresh_traces(), infection_layout, {responsive:true});
-        plotly_interval = setInterval(function() {
-            Plotly.extendTraces('plotDiv', {
-                x: [
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day], 
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day]
-                    ],
-                y: [
-                    [InfectiousMatterSim.state_counts[AgentStates.EXPOSED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.S_INFECTED] + InfectiousMatterSim.state_counts[AgentStates.A_INFECTED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.RECOVERED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.SUSCEPTIBLE]]
-                    ]
-            }, [0, 1, 2, 3]);
-        }, 1000)
-
-        boundry_check = true;
-
-    });
-
-
-    UIkit.util.on("#page4", 'inview', function(e) {
-        //TODO: handle direct browser refresh
-        document.getElementById('graphDiv').style.visibility = "hidden";
-
-        document.getElementById('plotDiv').style.width=300;
-        document.getElementById('plotDiv').style.visibility = "visible";
-        Plotly.relayout('plotDiv', {width: 300});
-        boundry_check = true;
-
-    });
-
-    UIkit.util.on("#page5", 'inview', function(e) {
-        document.getElementById('graphDiv').style.visibility = "hidden";
-        document.getElementById('plotDiv').style.visibility = "visible";
-
-
-        clear_simulation();
-        world_params.pop_size = 100; 
-        world_params.num_residences = 4;
-        world_params.residence_size = 120;
-        world_params.num_to_infect = 2;
-        world_params.num_visitors = 5;
-
-        reset_population();
-        InfectiousMatterSim.infection_params.per_contact_infection = 1.0;
-        
-        document.getElementById('plotDiv').style.visibility = "visible";
-
-        Plotly.react('plotDiv', get_fresh_traces(), infection_layout, {responsive:true});
-        plotly_interval = setInterval(function() {
-            Plotly.extendTraces('plotDiv', {
-                x: [
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day], 
-                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day]
-                    ],
-                y: [
-                    [InfectiousMatterSim.state_counts[AgentStates.EXPOSED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.S_INFECTED] + InfectiousMatterSim.state_counts[AgentStates.A_INFECTED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.RECOVERED]],
-                    [InfectiousMatterSim.state_counts[AgentStates.SUSCEPTIBLE]]
-                    ]
-            }, [0, 1, 2, 3]);
-        }, 1000);
-        boundry_check = true;
-    });
-
-    UIkit.util.on("#page6", 'inview', function(e) {
-        //TODO: Handle browser refresh/link to this div directly
-        document.getElementById('graphDiv').style.visibility = "visible";
-    })
-
     UIkit.util.on("#page7", 'inview', function(e) {
+        console.log("running?");
         document.getElementById('plotDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
 
         let setup_rural_sim = function(num_visitors) {
             clear_simulation();
             world_params.pop_size = 20; 
-            world_params.num_residences = 9;
-            world_params.residence_size = 80;
-            world_params.residence_padding = 15;
+            world_params.num_residences = 6;
+            world_params.residence_size = 180;
+            world_params.residence_padding = 12;
             world_params.agent_size = 1.5;
             world_params.num_to_infect = 2;
             world_params.num_visitors = num_visitors || 3;
 
             world_params.residence_options = [
-                {subpop_size: 70},
-                {subpop_size: 40},
-                {subpop_size: 10},
-                {subpop_size: 30},
-                {subpop_size: 12},
-                {subpop_size: 10},
-                {subpop_size: 20},
-                {subpop_size: 12},
-                {subpop_size: 10}
+                {subpop_size: 300},
+                {subpop_size: 300},
+                {subpop_size: 200},
+                {subpop_size: 100},
+                {subpop_size: 120},
+                {subpop_size: 100},
+                {subpop_size: 200},
+                {subpop_size: 120},
+                {subpop_size: 100}
             ]
 
             reset_population();
@@ -455,12 +329,8 @@ window.onload = function() {
         }
 
 
-        if (boundry_check) setup_rural_sim(world_params.num_visitors);
-        boundry_check = false;
+        setup_rural_sim(world_params.num_visitors);
 
-        document.getElementById('restart_btn').onclick = function() {
-            setup_rural_sim(world_params.num_visitors);
-        }
 
     });
 
