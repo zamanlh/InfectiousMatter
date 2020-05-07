@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "browserify": "^16.5.1",
+    "color-interpolate": "^1.0.5",
+    "color-space": "^1.16.0",
     "dat.gui": "^0.7.7",
     "fastpriorityqueue": "^0.6.3",
     "jstat": "^1.9.2",
@@ -15,6 +17,7 @@
     "matter-js": "^0.14.2",
     "matter-wrap": "^0.2.0",
     "plotly.js": "^1.54.0",
+    "three": "^0.116.1",
     "uikit": "^3.4.2",
     "uniqid": "^5.2.0",
     "vivagraphjs": "^0.12.0"

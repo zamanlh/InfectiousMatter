@@ -1,6 +1,29 @@
 var UIkit = require('uikit');
+var THREE = require('three');
+let colormap = require('colormap')
+let colors = colormap( {
+    colormap: 'bone',
+    nshades: 15,
+    format: 'hex',
+    alpha: 1
+});
 
+let pathogen_colors = colormap({
+    colormap: 'rainbow-soft',
+    nshades: 15,
+    format: 'hex',
+    alpha: 1
+})
 
+let interpolate = require('color-interpolate');
+let pathogen_color_range = interpolate(pathogen_colors);
+
+//weird
+let colorstr_to_vivacolor = function(colorstr) {
+    return "0x" + new THREE.Color(colorstr).getHexString() + "ff";
+}
+
+let webgl_colors = colors.map(colorstr_to_vivacolor);
 
 window.onload = function() {
     var Matter = require('matter-js');
@@ -17,8 +40,11 @@ window.onload = function() {
                 if (temp_agent.migrating) continue;
                 temp_agent.migrating = true;
 
-                let temp_dest = Matter.Common.choose(residences);
+                //let temp_dest = Matter.Common.choose(residences);
                 let agent_home = temp_agent.home || temp_agent.location;
+
+                let agent_residence_idx = residences.indexOf(temp_agent.home);
+                let temp_dest = residences[(agent_residence_idx +1) % residences.length]
 
                 temp_agent.home_state = {position: temp_agent.body.position, velocity: temp_agent.body.velocity};
 
@@ -53,7 +79,7 @@ window.onload = function() {
         residence_options: [],
         pop_size: 20,
         num_to_infect: 2,
-        num_visitors: 0,
+        num_visitors: 1,
         residence_size: 300,
         residence_padding: 20
 
@@ -63,6 +89,8 @@ window.onload = function() {
         sim_time_per_day: 1000,
         agent_size: 3,
         link_lifetime: 200,
+        pathogen_mut_prob: 0.1
+
     };
     simulation_params.link_lifetime = 7*simulation_params.sim_time_per_day;
 
@@ -72,9 +100,9 @@ window.onload = function() {
         incubation_period_mu: 5,
         incubation_period_sigma: 3,
         
-        infectious_period_mu: 7,
-        infectious_period_sigma: 4,
-        fraction_asymptomatic: 0.2,
+        infectious_period_mu: 8,
+        infectious_period_sigma: 2,
+        fraction_asymptomatic: 0.0,
         
         asymptomatic_infectious_period_mu: 1.5,
         asymptomatic_infectious_period_sigma: 1.5,
@@ -82,12 +110,20 @@ window.onload = function() {
         fraction_seek_care: 0.5,
         fraction_isolate: 0.2,
         time_to_seek_care: 2.5,
-        movement_scale: 0.8,
+        movement_scale: 1,
     };
 
+    /*
     let default_simulation_colors = {
         viva_colors: [0x9370DBff, 0x00FF00ff, 0xFFFF00ff, 0xFFA500ff, 0x0000FFff, 0xA9A9A9ff, 0xFF00FFff, 0x00CED1ff,0x98FB98ff, 0xCD853Fff],
         matter_colors: ["mediumpurple", "lime", "yellow", "orange", "blue", "darkgrey", "fuchsia", "darkturquoise", "palegreen", "peru"]
+    } 
+    */
+
+
+    let default_simulation_colors = {
+        viva_colors: webgl_colors,
+        matter_colors: colors
     }
 
     let infection_layout = {
@@ -134,7 +170,7 @@ window.onload = function() {
 
     });
     viva_renderer.run();
-    for (let i=0; i < 30; i++) {
+    for (let i=0; i < 50; i++) {
         viva_renderer.zoomOut();
     }
 
@@ -163,7 +199,7 @@ window.onload = function() {
             
             let res_prop = {
                 type: "residence", 
-                friction: 0.02,
+                friction: 0.002,
                 bounds: {
                     min: {
                         x: x_min,
@@ -253,7 +289,7 @@ window.onload = function() {
             marker: { color: "grey" }
         }
 
-        let plot_data = [exposed, in300fected, recovered, susceptible];
+        let plot_data = [exposed, infected, recovered, susceptible];
 
         return plot_data;
 
@@ -261,7 +297,7 @@ window.onload = function() {
 
     let clear_simulation = function() {
         clearInterval(plotly_interval);
-        Plotly.purge('plotDiv');
+        //Plotly.purge('plotDiv');
 
         InfectiousMatterSim.clear_simulator();
 
@@ -279,60 +315,77 @@ window.onload = function() {
 
 
     UIkit.util.on("#page7", 'inview', function(e) {
-        console.log("running?");
         document.getElementById('plotDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
 
         let setup_rural_sim = function(num_visitors) {
             clear_simulation();
             world_params.pop_size = 20; 
-            world_params.num_residences = 6;
-            world_params.residence_size = 180;
-            world_params.residence_padding = 12;
+            world_params.num_residences = 12;
+            world_params.residence_size = 120;
+            world_params.residence_padding = 20;
             world_params.agent_size = 1.5;
-            world_params.num_to_infect = 2;
-            world_params.num_visitors = num_visitors || 3;
+            world_params.num_to_infect = 1;
+            world_params.num_visitors = 4;
 
             world_params.residence_options = [
-                {subpop_size: 300},
-                {subpop_size: 300},
-                {subpop_size: 200},
+                {subpop_size: 150},
+                {subpop_size: 150},
+                {subpop_size: 150},
                 {subpop_size: 100},
                 {subpop_size: 120},
                 {subpop_size: 100},
-                {subpop_size: 200},
+                {subpop_size: 180},
                 {subpop_size: 120},
+                {subpop_size: 100},
+                {subpop_size: 100},
+                {subpop_size: 100},
                 {subpop_size: 100}
             ]
 
             reset_population();
             InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
             InfectiousMatterSim.infection_params.movement_scale = 1.0;
-
-            Plotly.react('plotDiv', get_fresh_traces(), infection_layout, {responsive:true});
-            plotly_interval = setInterval(function() {
-                Plotly.extendTraces('plotDiv', {
-                    x: [
-                        [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                        [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
-                        [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day], 
-                        [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day]
-                        ],
-                    y: [
-                        [InfectiousMatterSim.state_counts[AgentStates.EXPOSED]],
-                        [InfectiousMatterSim.state_counts[AgentStates.S_INFECTED] + InfectiousMatterSim.state_counts[AgentStates.A_INFECTED]],
-                        [InfectiousMatterSim.state_counts[AgentStates.RECOVERED]],
-                        [InfectiousMatterSim.state_counts[AgentStates.SUSCEPTIBLE]]
-                        ]
-                }, [0, 1, 2, 3]);
-            }, 1000);
+            
         }
-
 
         setup_rural_sim(world_params.num_visitors);
 
-
     });
+
+
+var trace1 = {
+  x: [14, 23],
+  y: ['orangutans', 'monkeys'],
+  name: 'SF Zoo',
+  orientation: 'h',
+  marker: {
+    color: 'rgba(55,128,191,0.6)',
+    width: 1
+  },
+  type: 'bar'
+};
+
+var trace2 = {
+  x: [12, 18, 29],
+  y: ['giraffes', 'orangutans', 'monkeys'],
+  name: 'LA Zoo',
+  orientation: 'h',
+  type: 'bar',
+  marker: {
+    color: 'rgba(255,153,51,0.6)',
+    width: 1
+  }
+};
+
+var data = [trace1, trace2];
+
+var layout = {
+  title: 'Colored Bar Chart',
+  barmode: 'stack'
+};
+
+Plotly.newPlot('plotDiv', data, layout);
 
 
 }
