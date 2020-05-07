@@ -92,7 +92,7 @@ window.onload = function() {
         sim_time_per_day: 1000,
         agent_size: 3,
         link_lifetime: 200,
-        pathogen_mut_prob: 0.1
+        pathogen_mut_prob: 0.05
 
     };
     simulation_params.link_lifetime = 7*simulation_params.sim_time_per_day;
@@ -113,7 +113,6 @@ window.onload = function() {
         fraction_seek_care: 0.5,
         fraction_isolate: 0.2,
         time_to_seek_care: 2.5,
-        movement_scale: 1,
     };
 
     /*
@@ -156,26 +155,6 @@ window.onload = function() {
 
 
     let InfectiousMatterSim = new InfectiousMatter('matterDiv', false, simulation_params, infection_params, default_simulation_colors);
-
-    let viva_layout = Viva.Graph.Layout.forceDirected(ContactGraph, {
-        springLength : 15,
-        springCoeff : 0.00005,
-        dragCoeff : 0.01,
-        gravity : -1.5
-    });
-
-    let viva_graphics = Viva.Graph.View.webglGraphics();
-    let viva_renderer = Viva.Graph.View.renderer(ContactGraph, {
-        container: document.getElementById('graphDiv'),
-        graphics: viva_graphics,
-        renderLinks: true,
-        layout: viva_layout
-
-    });
-    viva_renderer.run();
-    for (let i=0; i < 50; i++) {
-        viva_renderer.zoomOut();
-    }
     
     var setup_world = function(res_size, res_pad) {
         residences = []
@@ -276,7 +255,7 @@ window.onload = function() {
 
     UIkit.util.on("#page7", 'inview', function(e) {
         document.getElementById('plotDiv').style.visibility = "visible";
-        document.getElementById('graphDiv').style.visibility = "visible";
+        document.getElementById('graphDiv').style.visibility = "hidden";
 
         let setup_rural_sim = function(num_visitors) {
             clear_simulation();
@@ -286,7 +265,7 @@ window.onload = function() {
             world_params.residence_padding = 15;
             world_params.agent_size = 1.5;
             world_params.num_to_infect = 1;
-            world_params.num_visitors = 5;
+            world_params.num_visitors = 10;
 
             /*world_params.residence_options = [
                 {subpop_size: 80},
@@ -305,8 +284,8 @@ window.onload = function() {
 
             reset_population();
             InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
-            InfectiousMatterSim.infection_params.movement_scale = 1.0;
-            
+            InfectiousMatterSim.infection_params.movement_scale = 2.0;
+            console.log(InfectiousMatterSim.simulation_params.pathogen_mut_prob);
         }
 
         setup_rural_sim(world_params.num_visitors);
