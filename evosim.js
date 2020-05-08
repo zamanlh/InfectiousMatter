@@ -349,53 +349,51 @@ window.onload = function() {
 
     });
 
-    UIkit.util.on("#page7", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "visible";
+    document.getElementById('phyloDiv').style.visibility = "visible";
 
-        let setup_rural_sim = function(num_visitors) {
-            clear_simulation();
-            world_params.pop_size = 1000; 
-            world_params.num_residences = 20;
-            world_params.residence_size = 80;
-            world_params.residence_padding = 15;
-            world_params.agent_size = 1.5;
-            world_params.num_to_infect = 1;
-            world_params.num_local_visitors = 10;
+    let setup_rural_sim = function(num_visitors) {
+        clear_simulation();
+        world_params.pop_size = 1000; 
+        world_params.num_residences = 20;
+        world_params.residence_size = 80;
+        world_params.residence_padding = 15;
+        world_params.agent_size = 1.5;
+        world_params.num_to_infect = 1;
+        world_params.num_local_visitors = 10;
 
-            /*world_params.residence_options = [
-                {subpop_size: 80},
-                {subpop_size: 150},
-                {subpop_size: 150},
-                {subpop_size: 100},
-                {subpop_size: 120},
-                {subpop_size: 100},
-                {subpop_size: 180},
-                {subpop_size: 120},
-                {subpop_size: 100},
-                {subpop_size: 100},
-                {subpop_size: 100},
-                {subpop_size: 100}
-            ]*/
+        /*world_params.residence_options = [
+            {subpop_size: 80},
+            {subpop_size: 150},
+            {subpop_size: 150},
+            {subpop_size: 100},
+            {subpop_size: 120},
+            {subpop_size: 100},
+            {subpop_size: 180},
+            {subpop_size: 120},
+            {subpop_size: 100},
+            {subpop_size: 100},
+            {subpop_size: 100},
+            {subpop_size: 100}
+        ]*/
 
-            reset_population();
-            InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
-            InfectiousMatterSim.infection_params.movement_scale = 2.0;
+        reset_population();
+        InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
+        InfectiousMatterSim.infection_params.movement_scale = 2.0;
 
-        }
+    }
 
-        setup_rural_sim(world_params.num_global_visitors);
+    setup_rural_sim(world_params.num_global_visitors);
 
-        phylo_viva_renderer.run();
+    phylo_viva_renderer.run();
 
-        for (let i=0; i < 30; i++) {
-            phylo_viva_renderer.zoomOut();
-        }
+    for (let i=0; i < 30; i++) {
+        phylo_viva_renderer.zoomOut();
+    }
 
-        document.getElementById('restart_btn').onclick = function() {
-            setup_rural_sim(world_params.num_visitors);
-        }
+    document.getElementById('restart_btn').onclick = function() {
+        setup_rural_sim(world_params.num_visitors);
+    }
 
 
-    });
 
 }
