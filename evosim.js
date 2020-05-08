@@ -32,9 +32,12 @@ window.onload = function() {
 
     var { InfectiousMatter, AgentStates, ContactGraph } = require('./lib/simulation.js');
 
-    InfectiousMatter.prototype.migrate_event = function() {
+
+    InfectiousMatter.prototype.local_migrate_event = function(num_to_migrate) {
         return () => {
-            for (let i=0; i < world_params.num_visitors; i++) {
+            var num_visitors = num_to_migrate || world_params.num_local_visitors;
+
+            for (let i=0; i < num_visitors; i++) {
                 let temp_agent = Matter.Common.choose(this.agents);
                 if (temp_agent.migrating) continue;
                 temp_agent.migrating = true;
@@ -77,12 +80,53 @@ window.onload = function() {
         };
     };
 
+    InfectiousMatter.prototype.global_migrate_event = function(num_to_migrate) {
+
+        return () => {
+            var num_visitors = num_to_migrate || world_params.num_global_visitors;
+            console.log(num_visitors);
+            for (let i=0; i < num_visitors; i++) {
+                let temp_agent = Matter.Common.choose(this.agents);
+                if (temp_agent.migrating) continue;
+                temp_agent.migrating = true;
+
+                let temp_dest = Matter.Common.choose(residences);
+                let agent_home = temp_agent.home || temp_agent.location;
+
+                temp_agent.home_state = {position: temp_agent.body.position, velocity: temp_agent.body.velocity};
+
+                temp_agent.location.migrate_to(temp_dest, temp_agent, function(agent) {
+                        //update bounds...
+                        agent.body.plugin.wrap = temp_dest.bounds;
+                        Matter.Body.setPosition(agent.body, temp_dest.get_random_position());
+                        agent.body.frictionAir = temp_dest.friction;
+                    }
+                );
+                
+                this.add_event( {
+                    time: this.simulation_params.sim_time_per_day, 
+                    callback: function() {
+                        temp_agent.location.migrate_to(agent_home, temp_agent, function(agent) {
+                        //update bounds...
+                            agent.body.plugin.wrap = agent_home.bounds;
+                            Matter.Body.setPosition(agent.body, agent_home.get_random_position());
+                            Matter.Body.setVelocity(agent.body, agent.home_state.velocity);
+                            agent.body.frictionAir = agent_home.friction;
+                            agent.migrating = false;
+                        });
+                    }
+                });
+
+            }
+        };
+    };
+
     let world_params = {
         num_residences: 1,
         residence_options: [],
         pop_size: 20,
         num_to_infect: 2,
-        num_visitors: 1,
+        num_global_visitors: 3,
         residence_size: 300,
         residence_padding: 20
 
@@ -92,7 +136,7 @@ window.onload = function() {
         sim_time_per_day: 1000,
         agent_size: 3,
         link_lifetime: 200,
-        pathogen_mut_prob: 0.05
+        pathogen_mut_prob: 0.25
 
     };
     simulation_params.link_lifetime = 7*simulation_params.sim_time_per_day;
@@ -136,12 +180,6 @@ window.onload = function() {
             t: 10,
             pad: 10
           },
-        showlegend: true,
-        legend: {
-            x:1,
-            xanchor: 'right',
-            y:1
-        }, 
         xaxis: {
             title: "Days",
             rangemode: 'nonnegative'
@@ -156,6 +194,27 @@ window.onload = function() {
 
     let InfectiousMatterSim = new InfectiousMatter('matterDiv', false, simulation_params, infection_params, default_simulation_colors);
     
+    let viva_layout = Viva.Graph.Layout.forceDirected(ContactGraph, {
+        springLength : 15,
+        springCoeff : 0.00005,
+        dragCoeff : 0.01,
+        gravity : -1.5
+    });
+
+    let viva_graphics = Viva.Graph.View.webglGraphics();
+    let viva_renderer = Viva.Graph.View.renderer(ContactGraph, {
+        container: document.getElementById('graphDiv'),
+        graphics: viva_graphics,
+        renderLinks: true,
+        layout: viva_layout,
+        interactive: 'node drag zoom'
+
+    });
+    viva_renderer.run();
+    for (let i=0; i < 40; i++) {
+        viva_renderer.zoomOut();
+    }
+
     var setup_world = function(res_size, res_pad) {
         residences = []
         let margin = res_pad || world_params.residence_padding || 20;
@@ -221,7 +280,9 @@ window.onload = function() {
             }
         }
 
-        InfectiousMatterSim.add_event({time: 1000, callback: InfectiousMatterSim.migrate_event(), recurring: true });
+        InfectiousMatterSim.add_event({time: 1000, callback: InfectiousMatterSim.local_migrate_event(), recurring: true });
+        InfectiousMatterSim.add_event({time: 1000, callback: InfectiousMatterSim.global_migrate_event(), recurring: true });
+
         InfectiousMatterSim.add_event( {
             time: InfectiousMatterSim.simulation_params.sim_time_per_day * 3,
             callback: function() {
@@ -236,8 +297,8 @@ window.onload = function() {
     };
 
     let clear_simulation = function() {
-        //clearInterval(plotly_interval);
-        //Plotly.purge('plotDiv');
+       //clearInterval(plotly_interval);
+        Plotly.purge('plotDiv');
 
         InfectiousMatterSim.clear_simulator();
 
@@ -253,9 +314,61 @@ window.onload = function() {
 
     };
 
+    var plotly_interval;
+
+    let get_fresh_traces = function() {
+        let exposed = {
+            x: [0],
+            y: [0],
+            name: "Exposed",
+            marker: { color: "orange" },
+            type: "scattergl",
+            mode: "line",
+        };
+
+        let infected = {
+            x: [0],
+            y: [0],
+            name: "Infected",
+            marker: { color: "red" },
+            type: "scattergl",
+            mode: "line",
+        };
+
+        let recovered = {
+            x: [0],
+            y: [0],
+            name: "Recovered",
+            marker: { color: "green" },
+            type: "scattergl",
+            mode: "line",
+        };
+
+        let susceptible = {
+            x: [0],
+            y: [0],
+            name: "Susceptable",
+            marker: { color: "grey" },
+            type: "scattergl",
+            mode: "line",
+        }
+
+        let plot_data = [exposed, infected, recovered, susceptible];
+
+        return plot_data;
+
+    }
+    UIkit.util.on("#migrationSlider", 'input', function(e) {
+        let badge = document.getElementById('migrationBadge');
+        badge.innerHTML = e.target.value;
+
+        world_params.num_global_visitors = e.target.value;
+
+    });
+
     UIkit.util.on("#page7", 'inview', function(e) {
         document.getElementById('plotDiv').style.visibility = "visible";
-        document.getElementById('graphDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "visible";
 
         let setup_rural_sim = function(num_visitors) {
             clear_simulation();
@@ -265,7 +378,7 @@ window.onload = function() {
             world_params.residence_padding = 15;
             world_params.agent_size = 1.5;
             world_params.num_to_infect = 1;
-            world_params.num_visitors = 10;
+            world_params.num_local_visitors = 10;
 
             /*world_params.residence_options = [
                 {subpop_size: 80},
@@ -285,10 +398,33 @@ window.onload = function() {
             reset_population();
             InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
             InfectiousMatterSim.infection_params.movement_scale = 2.0;
-            console.log(InfectiousMatterSim.simulation_params.pathogen_mut_prob);
+
         }
 
-        setup_rural_sim(world_params.num_visitors);
+        setup_rural_sim(world_params.num_global_visitors);
+
+        document.getElementById('restart_btn').onclick = function() {
+            setup_rural_sim(world_params.num_visitors);
+        }
+
+        Plotly.react('plotDiv', get_fresh_traces(), infection_layout, {responsive:true});
+        plotly_interval = setInterval(function() {
+            Plotly.extendTraces('plotDiv', {
+                x: [
+                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
+                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
+                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day], 
+                    [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day]
+                    ],
+                y: [
+                    [InfectiousMatterSim.state_counts[AgentStates.EXPOSED]],
+                    [InfectiousMatterSim.state_counts[AgentStates.S_INFECTED] + InfectiousMatterSim.state_counts[AgentStates.A_INFECTED]],
+                    [InfectiousMatterSim.state_counts[AgentStates.RECOVERED]],
+                    [InfectiousMatterSim.state_counts[AgentStates.SUSCEPTIBLE]]
+                    ]
+            }, [0, 1, 2, 3]);
+        }, 1000);
+
 
     });
 
