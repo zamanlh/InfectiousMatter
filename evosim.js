@@ -6,14 +6,14 @@ var PhyloGraph = new Viva.Graph.graph();
 
 
 let colors = colormap( {
-    colormap: 'bone',
+    colormap: 'copper',
     nshades: 20,
     format: 'hex',
     alpha: 1
 });
 
 let pathogen_colors = colormap({
-    colormap: 'blackbody',
+    colormap: 'rainbow',
     nshades: 15,
     format: 'hex',
     alpha: 1
@@ -21,6 +21,7 @@ let pathogen_colors = colormap({
 
 let interpolate = require('color-interpolate');
 let pathogen_color_range = interpolate(pathogen_colors);
+
 
 //weird
 let colorstr_to_vivacolor = function(colorstr) {
@@ -121,14 +122,17 @@ window.onload = function() {
         };
     };
 
+
     let world_params = {
-        num_residences: 1,
+        num_residences: 20,
         residence_options: [],
-        pop_size: 20,
-        num_to_infect: 2,
+        pop_size: 1000,
+        num_to_infect: 0,
         num_global_visitors: 3,
-        residence_size: 300,
-        residence_padding: 20
+        num_local_visitors: 10,
+        residence_size: 70,
+        residence_padding: 15,
+        agent_size: 1.5
 
     };
 
@@ -136,13 +140,14 @@ window.onload = function() {
         sim_time_per_day: 1000,
         agent_size: 3,
         link_lifetime: 200,
-        pathogen_mut_prob: 0.25
+        pathogen_mut_prob: 0.0
 
     };
     simulation_params.link_lifetime = 7*simulation_params.sim_time_per_day;
 
     var infection_params = {
         per_contact_infection: 0.5, 
+        movement_scale: 1.25,
 
         incubation_period_mu: 5,
         incubation_period_sigma: 3,
@@ -176,10 +181,9 @@ window.onload = function() {
     let InfectiousMatterSim = new InfectiousMatter('matterDiv', false, simulation_params, infection_params, default_simulation_colors);
     
 
-    console.log(PhyloGraph);
 
     let phylo_viva_layout = Viva.Graph.Layout.forceDirected(PhyloGraph, {
-        springLength : 15,
+        springLength : 12,
         springCoeff : 0.00005,
         dragCoeff : 0.01,
         gravity : -1.5
@@ -190,7 +194,9 @@ window.onload = function() {
         container: document.getElementById('phyloDiv'),
         graphics: phylo_viva_graphics,
         renderLinks: true,
-        layout: phylo_viva_layout
+        layout: phylo_viva_layout,
+        interactive: 'drag' 
+
     });
 
 
@@ -206,7 +212,9 @@ window.onload = function() {
         container: document.getElementById('graphDiv'),
         graphics: contact_viva_graphics,
         renderLinks: true,
-        layout: contact_viva_layout
+        layout: contact_viva_layout,
+        interactive: 'drag'
+
     });
 
     contact_viva_renderer.run();
@@ -214,30 +222,57 @@ window.onload = function() {
         contact_viva_renderer.zoomOut();
     }
 
+    
+    phylo_viva_renderer.run();
+    for (let i=0; i < 15; i++) {
+        phylo_viva_renderer.zoomOut();
+    }
+
+    var currentScale = 1;
+
+    function zoomOut() {
+        let graphRect = phylo_viva_layout.getGraphRect();
+        let graphSize = Math.min(graphRect.x2 - graphRect.x1, graphRect.y2 - graphRect.y1);
+        let screenSize = 200//Math.min(document.body.clientWidth, document.body.clientHeight);
+        let desiredScale = screenSize / graphSize;
+                    
+        let pos = phylo_viva_layout.getNodePosition('root');
+
+    // zoom API in vivagraph 0.5.x is silly. There is no way to pass transform
+    // directly. Maybe it will be fixed in future, for now this is the best I could do:
+        if (desiredScale < currentScale * 1) {
+            currentScale = phylo_viva_renderer.zoomOut();
+
+        }
+    }
+
+
 
     let infection_callback_phylo = function(infected_agent, other_agent) {
-        if (!other_agent.pathogen.genotype_parent_uuid) {
-            other_agent.pathogen.genotype_parent_uuid = 'root';
+        if(other_agent) {
+            //check if mutant or not...
+            if(other_agent.pathogen.color_float == infected_agent.pathogen.color_float) {
+                PhyloGraph.addLink(infected_agent.pathogen.uuid, other_agent.pathogen.genotype_parent_uuid);
+                infected_agent.pathogen.genotype_parent_uuid = other_agent.pathogen.genotype_parent_uuid;
+            } else {
+                //we are a mutant, so we have a new genotype parent
+                PhyloGraph.addLink(infected_agent.pathogen.uuid, other_agent.pathogen.uuid);
 
-        }
-        //check if mutant or not...
-        if(other_agent.pathogen.color_float == infected_agent.pathogen.color_float) {
-            PhyloGraph.addLink(infected_agent.pathogen.uuid, other_agent.pathogen.genotype_parent_uuid);
-            console.log(infected_agent.pathogen.uuid, other_agent.pathogen.genotype_parent_uuid);
-            infected_agent.pathogen.genotype_parent_uuid = other_agent.pathogen.genotype_parent_uuid;
+                infected_agent.pathogen.genotype_parent_uuid = other_agent.pathogen.uuid;
+                //console.log(infected_agent.pathogen.genotype_parent_uuid);
+            }
         } else {
-            //we are a mutant, so we have a new genotype parent
-            PhyloGraph.addLink(infected_agent.pathogen.uuid, other_agent.pathogen.uuid);
-            console.log(infected_agent.pathogen.uuid, other_agent.pathogen.uuid);
+            //no ogent infecting
+            PhyloGraph.addNode(infected_agent.pathogen.uuid);
+            PhyloGraph.addLink(infected_agent.pathogen.uuid, 'root');
 
-            infected_agent.pathogen.genotype_parent_uuid = other_agent.pathogen.uuid;
-            //console.log(infected_agent.pathogen.genotype_parent_uuid);
+            infected_agent.pathogen.genotype_parent_uuid = infected_agent.pathogen.uuid;
         }
-
+        
+        
         phylo_viva_graphics.getNodeUI(infected_agent.pathogen.uuid).color = colorstr_to_vivacolor(infected_agent.body.color);
 
         phylo_viva_graphics.getNodeUI(infected_agent.pathogen.uuid).size = 40;
-
     };
 
     InfectiousMatterSim.register_infection_callback(infection_callback_phylo);
@@ -317,83 +352,160 @@ window.onload = function() {
                 for (let i=0; i < world_params.num_to_infect; i++) {
                     let random_agent = Matter.Common.choose(InfectiousMatterSim.agents);
                     InfectiousMatterSim.expose_org(random_agent.body, AgentStates.S_INFECTED);
-                    PhyloGraph.addLink(random_agent.pathogen.uuid, 'root');
                 }
             }
         })
 
     };
 
-    let clear_simulation = function() {
 
+
+    //mouse interaction for infection...
+    let add_mouse_infection = function() {
+        Matter.Events.on(InfectiousMatterSim.mouseConstraint, 'mousedown', (event) => {
+            if (InfectiousMatterSim.mouseConstraint.body && InfectiousMatterSim.mouseConstraint.body.agent_object) {
+                InfectiousMatterSim.expose_org(InfectiousMatterSim.mouseConstraint.body, AgentStates.S_INFECTED);
+            }
+        });
+    }
+
+
+
+    let clear_simulation = function() {
+        ContactGraph.clear();
+        PhyloGraph.clear();
+        phylo_viva_renderer.reset();
+        PhyloGraph.addNode('root');
+        phylo_viva_renderer.rerender();
+        for (let i=0; i < 15; i++) {
+            phylo_viva_renderer.zoomOut();
+        }
+        currentScale = 1;
+
+        
         InfectiousMatterSim.clear_simulator();
 
         world_params.residence_options = [];
-
-        ContactGraph.clear();
-        PhyloGraph.clear();
-
     };
 
     let reset_population = function() {
         InfectiousMatterSim.setup_matter_env();
         setup_world();
+        //add_mouse_infection();
 
     };
 
-    UIkit.util.on("#migrationSlider", 'input', function(e) {
-        let badge = document.getElementById('migrationBadge');
+    UIkit.util.on("#page2", 'inview', function(e) {
+        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "hidden";
+
+        world_params.num_to_infect = 0;
+        world_params.num_local_visitors = 0;
+        setup_evo_sim(0, 0);
+    });
+
+    UIkit.util.on("#page3", 'inview', function(e) {
+        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "visible";
+
+    });
+    UIkit.util.on("#page4", 'inview', function(e) {
+        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "visible";
+        world_params.num_local_visitors = 10;
+        world_params.num_global_visitors = 0;
+
+    });
+
+    UIkit.util.on("#page5", 'inview', function(e) {
+        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "visible";
+        world_params.num_local_visitors = 10;
+        world_params.num_global_visitors = 0;
+
+
+    })
+    
+    UIkit.util.on("#page6", 'inview', function(e) {
+        //TODO: reset phylo network canvas...
+        PhyloGraph.clear();
+
+        document.getElementById('phyloDiv').style.visibility = "visible";
+        document.getElementById('graphDiv').style.visibility = "visible";
+
+        world_params.num_to_infect = 2;
+        setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
+
+        setInterval(zoomOut, 200);
+    })
+
+    UIkit.util.on("#page7", 'inview', function(e) {
+        //TODO: reset phylo network canvas...
+        PhyloGraph.clear();
+
+        document.getElementById('phyloDiv').style.visibility = "visible";
+        document.getElementById('graphDiv').style.visibility = "visible";
+
+        world_params.num_to_infect = 2;
+        pathogen_mut_prob: 0.0
+        setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
+        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.25;
+        setInterval(zoomOut, 200);
+    })
+
+
+    UIkit.util.on("#localMigrationSlider", 'input', function(e) {
+        let badge = document.getElementById('localMigrationBadge');
+        badge.innerHTML = e.target.value;
+
+        world_params.num_local_visitors = e.target.value;
+
+    });
+
+    UIkit.util.on("#globalMigrationSlider", 'input', function(e) {
+        let badge = document.getElementById('globalMigrationBadge');
         badge.innerHTML = e.target.value;
 
         world_params.num_global_visitors = e.target.value;
 
     });
 
-    document.getElementById('phyloDiv').style.visibility = "visible";
+    UIkit.util.on("#localMigrationSlider_p5", 'input', function(e) {
+        let badge = document.getElementById('localMigrationBadge_p5');
+        badge.innerHTML = e.target.value;
 
-    let setup_rural_sim = function(num_visitors) {
+        world_params.num_local_visitors = e.target.value;
+
+    });
+
+    UIkit.util.on("#globalMigrationSlider_p5", 'input', function(e) {
+        let badge = document.getElementById('globalMigrationBadge_p5');
+        badge.innerHTML = e.target.value;
+
+        world_params.num_global_visitors = e.target.value;
+
+    });
+
+    let setup_evo_sim = function(num_local_visitors, num_global_visitors) {
+        world_params.num_local_visitors = num_local_visitors;
+        world_params.num_global_visitors = num_global_visitors;
+
         clear_simulation();
-        world_params.pop_size = 1000; 
-        world_params.num_residences = 20;
-        world_params.residence_size = 80;
-        world_params.residence_padding = 15;
-        world_params.agent_size = 1.5;
-        world_params.num_to_infect = 1;
-        world_params.num_local_visitors = 10;
-
-        /*world_params.residence_options = [
-            {subpop_size: 80},
-            {subpop_size: 150},
-            {subpop_size: 150},
-            {subpop_size: 100},
-            {subpop_size: 120},
-            {subpop_size: 100},
-            {subpop_size: 180},
-            {subpop_size: 120},
-            {subpop_size: 100},
-            {subpop_size: 100},
-            {subpop_size: 100},
-            {subpop_size: 100}
-        ]*/
-
         reset_population();
-        InfectiousMatterSim.infection_params.per_contact_infection = 0.5;
-        InfectiousMatterSim.infection_params.movement_scale = 2.0;
 
     }
 
-    setup_rural_sim(world_params.num_global_visitors);
+    //setup_rural_sim(world_params.num_global_visitors);
 
-    phylo_viva_renderer.run();
-
-    for (let i=0; i < 30; i++) {
-        phylo_viva_renderer.zoomOut();
-    }
 
     document.getElementById('restart_btn').onclick = function() {
-        setup_rural_sim(world_params.num_visitors);
+        setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
     }
 
+    document.getElementById('infect_btn').onclick = function() {
+        let random_agent = Matter.Common.choose(InfectiousMatterSim.agents);
+        InfectiousMatterSim.expose_org(random_agent.body, AgentStates.S_INFECTED);
 
+    }
 
 }
