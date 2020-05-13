@@ -3,10 +3,11 @@ var THREE = require('three');
 let colormap = require('colormap')
 var Viva = require('vivagraphjs');
 var PhyloGraph = new Viva.Graph.graph();
+var Plotly = require('plotly.js');
 
 
 let colors = colormap( {
-    colormap: 'copper',
+    colormap: 'hsv',
     nshades: 20,
     format: 'hex',
     alpha: 1
@@ -190,6 +191,8 @@ window.onload = function() {
     });
 
     let phylo_viva_graphics = Viva.Graph.View.webglGraphics();
+
+    /*
     let phylo_viva_renderer = Viva.Graph.View.renderer(PhyloGraph, {
         container: document.getElementById('phyloDiv'),
         graphics: phylo_viva_graphics,
@@ -198,7 +201,7 @@ window.onload = function() {
         interactive: 'drag' 
 
     });
-
+    */
 
     let contact_viva_layout = Viva.Graph.Layout.forceDirected(ContactGraph, {
         springLength : 15,
@@ -222,11 +225,12 @@ window.onload = function() {
         contact_viva_renderer.zoomOut();
     }
 
-    
+    /*
     phylo_viva_renderer.run();
     for (let i=0; i < 15; i++) {
         phylo_viva_renderer.zoomOut();
     }
+    */
 
     var currentScale = 1;
 
@@ -246,6 +250,65 @@ window.onload = function() {
         }
     }
 
+    let infection_layout = {
+        margin: {
+            l: 50,
+            r: 10,
+            b: 50,
+            t: 10,
+            pad: 10
+          },
+        showlegend: false,
+        xaxis: {
+            title: "Days",
+            rangemode: 'nonnegative'
+        }, 
+        yaxis: {
+            title: "Count",
+            rangemode: 'nonnegative'
+        },
+    };
+
+    let exposed = {
+        x: [0],
+        y: [0],
+        type: "scattergl",
+
+        stackgroup: 'one',
+        name: "Exposed",
+      marker: { color: "orange" }
+    };
+
+    let infected = {
+      x: [0],
+      y: [0],
+      type: "scattergl",
+
+      stackgroup: 'one',
+      name: "Infected",
+      marker: { color: "red" }
+    };
+
+    let recovered = {
+      x: [0],
+      type: "scattergl",
+
+      y: [0],
+      stackgroup: 'one',
+      name: "Recovered",
+      marker: { color: "green" }
+    };
+
+    let susceptible = {
+        x: [0],
+        y: [world_params.pop_size],
+        stackgroup: 'one',
+        name: "Susceptable",
+        marker: { color: "grey" }
+    }
+
+
+    let plot_data = [exposed, infected, recovered, susceptible];
 
 
     let infection_callback_phylo = function(infected_agent, other_agent) {
@@ -374,12 +437,14 @@ window.onload = function() {
     let clear_simulation = function() {
         ContactGraph.clear();
         PhyloGraph.clear();
-        phylo_viva_renderer.reset();
+        //phylo_viva_renderer.reset();
         PhyloGraph.addNode('root');
-        phylo_viva_renderer.rerender();
+        
+        /*phylo_viva_renderer.rerender();
         for (let i=0; i < 15; i++) {
             phylo_viva_renderer.zoomOut();
-        }
+        }*/
+        
         currentScale = 1;
 
         
@@ -392,12 +457,32 @@ window.onload = function() {
         InfectiousMatterSim.setup_matter_env();
         setup_world();
         //add_mouse_infection();
+        Plotly.newPlot('phyloDiv', plot_data, infection_layout);
+        
+        setInterval(function() {
+        Plotly.extendTraces('phyloDiv', {
+            x: [
+                [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
+                [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day],
+                [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day], 
+                [InfectiousMatterSim.cur_sim_time/simulation_params.sim_time_per_day]
+                ],
+            y: [
+                [InfectiousMatterSim.state_counts[AgentStates.EXPOSED]],
+                [InfectiousMatterSim.state_counts[AgentStates.S_INFECTED] + InfectiousMatterSim.state_counts[AgentStates.A_INFECTED]],
+                [InfectiousMatterSim.state_counts[AgentStates.RECOVERED]],
+                [InfectiousMatterSim.state_counts[AgentStates.SUSCEPTIBLE]]
+                ]
+        }, [0, 1, 2, 3]);
+    }, 400)
+    
+
 
     };
 
     UIkit.util.on("#page2", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "hidden";
-        document.getElementById('graphDiv').style.visibility = "hidden";
+        document.getElementById('phyloDiv').style.visibility = "visible";
+        document.getElementById('graphDiv').style.visibility = "visible";
 
         world_params.num_to_infect = 0;
         world_params.num_local_visitors = 0;
@@ -405,12 +490,12 @@ window.onload = function() {
     });
 
     UIkit.util.on("#page3", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('phyloDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
 
     });
     UIkit.util.on("#page4", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('phyloDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
         world_params.num_local_visitors = 10;
         world_params.num_global_visitors = 0;

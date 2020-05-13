@@ -38,8 +38,9 @@
 				  float: left;
 				  background-color: #999999;
 				  visibility: hidden;
-
-
+				}
+				#simContainer {
+					min-width: 1000;
 				}
 				div.row {
 					width: 98vw;
@@ -69,13 +70,13 @@
 					</p>
 
 				    <p>
-						<div class="uk-cover-container uk-box-shadow-medium" uk-scrollspy="cls: uk-animation-fade; repeat: true;">
+						<div class="uk-cover-container uk-box-shadow-large" uk-scrollspy="cls: uk-animation-fade; repeat: true;">
 							<img data-src="../assets/img/evolution_teaser.png" uk-img>
 						</div>
 				    </p>
 
 					<p>
-						Evolution is one of those deceptively tricky topics that at first seems simple and intuitive. We can even boil it down into quips like <i>survival of the fittest</i> or, more accurately, <i>decent with modification</i>. The problem is that simple processes can give rise to incredibly complex and (yes I'm going to be that nerdy) beautiful patterns that challenge our intuition.
+						Evolution is one of those deceptively tricky topics that at first seems simple and intuitive. We can even boil it down into quips like <i>survival of the fittest</i> or, more accurately, <i>descent with modification</i>. The problem is that simple processes can give rise to incredibly complex and (yes I'm going to be that nerdy) beautiful patterns that challenge our intuition.
 					</p>
 
 					<p>
@@ -94,7 +95,7 @@
 					</p>
 
 					<p>
-					<div class="uk-card uk-card-default uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
+					<div class="uk-card uk-card-default uk-card-secondary uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
 
 						If you missed the introduction to the Infectious Matter simulator, I highly recommend <a href="https://infectiousmatter.com/" target="_blank">checking it out first</a>. Otherwise, keep scrolling!
 						
@@ -114,7 +115,7 @@
 						In the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">last walk through</a>, we added multiple locations connected by random visitors. We're going to extend that a bit here. First, we're going to add <i>even more</i> locations. 
 					</p>
 					<p>
-							<div uk-sticky class="uk-align-center uk-width-1-1" style="height:350; background: rgba(255, 255, 255, 0.95); z-index: 100">
+							<div id="simContainer" uk-sticky class="uk-align-center uk-width-1-1" style="height:350; background: rgba(255, 255, 255, 0.95); z-index: 100">
 								<div class="" id="phyloDiv"></div>
 								<div class="" uk-scrollspy="cls: uk-animation-slide-right; repeat: true;" id="matterDiv"></div>
 								<div class="" id="graphDiv"></div>
@@ -210,7 +211,7 @@
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Small World Pandemic</a></h1>
 
 				    <p class="uk-text-lead" id="page5" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Let's see an infection spread in a small world</p>
-			    	<table class="uk-table uk-table-small" uk-sticky="offset:350" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
+			    	<table class="uk-table uk-table-small" uk-sticky="offset:355" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
 			    		<tbody>
 			    			<tr>
 			    				<td><b>Local Visitors Per Day:</b></td>
@@ -310,8 +311,8 @@
 				    	It's easy to imagine seeing these patterns and wanting to attribute them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. But for now, we can get back to arguing about whether viruses are alive or not. 
 				    </p>
 				    <p>
-				    	<div class="uk-card uk-card-default uk-card-body uk-width-3-5 uk-align-center uk-flex-center">
-							Although there is only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! Keep doing your part to reduce transmission. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.
+				    	<div class="uk-card uk-card-default uk-card-primary uk-box-shadow-large uk-card-body uk-width-4-5 uk-align-center uk-flex-center">
+							<b>Although there is only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! Keep doing your part to reduce transmission. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.</b>
 						</div>
 				    </p>
 				</article>
