@@ -11,6 +11,13 @@
 		</script>
 
 		  <style>
+		  		a.uk-link-muted {
+		  			border-bottom: 1px dashed #999999;
+		  		}
+		  		a.uk-link-muted:hover {
+		  			text-decoration: none;
+		  			border-bottom: 1px dashed #222222;
+		  		}
 				#matterDiv {
 				  width: 440;
 				  height: 355; 
@@ -20,14 +27,14 @@
 				  background-color: #d8d8d8;
 
 				}
-				#phyloDiv {
+				#plotDiv {
 				  width: 250;
 				  height: 355;
 				  padding: 0;
 				  margin: 0;
 				  float: left;
 				  background-color: #999999;
-				  visibility: visible;
+				  visibility: hidden;
 
 				}
 				#graphDiv {
@@ -37,10 +44,17 @@
 				  margin: 0;
 				  float: left;
 				  background-color: #999999;
-				  visibility: visible;
+				  visibility: hidden;
 				}
 				#simContainer {
-					min-width: 1000;
+					white-space: nowrap;
+					display: inline-flex;
+					flex-wrap: nowrap;
+
+				}
+				div.no_wrap {
+					vertical-align: top;
+					display: inline-flex;
 				}
 				div.row {
 					width: 98vw;
@@ -59,20 +73,25 @@
 
 	<div class="uk-container uk-flex"> 
 		<div class="uk-width-5-6 uk-flex-left uk-margin-small">
-			<div uk-height-viewport >
+			<div uk-height-viewport>
 				<article class="uk-article">
 					<h1 class="uk-article-title"><a class="uk-link-reset" href="">It's a Small World</a></h1>
 
-					<p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Let's add a bit of realism to our browser world</p>
+					<p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Bringing in more structure</p>
 					<p>
-						In the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">last walk through</a>, we built up our web based pandemic simulator. This time, we're going to extend the model a bit further. First we'll add <i>even more</i> locations. 
+						In the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">last walk through</a>, we built up our web based pandemic simulator. We added multiple locations <b>(Subpopulations)</b> and experimented with how the spread of a pathogen was affected by having a few random visitors moving between them <b>(Migration)</b>. This time we're going to extend the model a bit further. First, we'll add <i>even more</i> subpopulations. 
 					</p>
+					
+					<div uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
+						<div id="simContainer">
+							<div class="no_wrap" id="plotDiv"></div>
+							<div class="no_wrap" id="matterDiv"></div>
+							<div class="no_wrap" id="graphDiv"></div>
+						</div>
+					</div>
+
 					<p>
-							<div id="simContainer" uk-sticky class="uk-align-center uk-width-1-1" style="height:350; background: rgba(255, 255, 255, 0.95); z-index: 100">
-								<div class="" id="phyloDiv"></div>
-								<div class="" uk-scrollspy="cls: uk-animation-slide-right; repeat: true;" id="matterDiv"></div>
-								<div class="" id="graphDiv"></div>
-							</div>
+
 					</p>
 
 				</article>
@@ -274,8 +293,8 @@
 			</div>
 
 		</div>
-		<div class="uk-width-1-6 uk-flex-column uk-flex-right uk-margin-xlarge-top uk-margin-large-left ">
-		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset:500" uk-sticky="offset: 50">
+		<div class="uk-width-1-6 uk-flex-column uk-flex-right uk-align-right uk-margin-xlarge-top">
+		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset: 500" uk-sticky="offset: 200">
 	    		<li><a href="#page1">An Evolving Pandemic</a></li>
 	    		<li><a href="#page2">It's a Small World</a></li>
 	    		<li><a href="#page3">Local Movement</a></li>
@@ -289,6 +308,6 @@
 		</div>
 	</div>
 
-	<script src="bundle_evosim.js" charset="UTF-8"></script>
+	<script src="bundle_smallworld.js" charset="UTF-8"></script>
 	</body>
 </html>
