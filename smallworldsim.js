@@ -574,6 +574,11 @@ window.onload = function() {
     }
 
     setup_evo_sim(0,0);
+    
+    document.getElementById('9_1_btn').onclick = function() {
+        world_params.num_to_infect = 1;
+        setup_evo_sim(9, 1);
+    }
 
     document.getElementById('8_2_btn').onclick = function() {
         world_params.num_to_infect = 1;

@@ -79,7 +79,10 @@
 
 					<p class="uk-text-lead" id="page1" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Most of the time that's a good thing</p>
 					<p>
-						In the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">last walk through</a>, we built up our web based pandemic simulator. We added multiple locations <b>(Subpopulations)</b> and experimented with how the spread of a pathogen was affected by having a few random visitors moving between them <b>(Migration)</b>. This time we're going to extend the model a bit further. First, we'll add <i>even more</i> subpopulations. 
+						In the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">last walk through</a>, we built up our web based pandemic simulator. We added multiple locations <b>(Subpopulations)</b> and experimented with how the spread of a pathogen was affected by having a few random visitors moving between them <b>(Migration)</b>. This time we're going to extend the model a bit further. You will get to investigate how including a more realistic kinds of movement between locations speeds up or slows down the spread of a disease.
+					</p>
+					<p>
+						First, we have to add <i>even more</i> subpopulations. 
 					</p>
 					
 					<div uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
@@ -135,7 +138,7 @@
  					</p>
 
  					<p>
- 						If you pay close attention to the visitors' colors bliping in and out of the different locations, you'll notice that they're always from just one location away. If you dial up the number of local visitors even higher, you can start to see the <b>Structure</b> of the local migration network. 
+ 						If you pay close attention to the visitors' colors blipping in and out of the different locations, you'll notice that they're always from just one location away. If you dial up the number of local visitors even higher, you can start to see the <b>Structure</b> of the local migration network. 
  					</p>
 
  					<p>
@@ -152,7 +155,7 @@
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Global Movement</a></h1>
 
 				    <p class="uk-text-lead" uk-scrollspy="cls: uk-animation-fade; repeat: true;">
-				    	We don't live in a ring world.
+				    	We don't live in a ring world
 				    </p>
 			    	<div class="uk-box-shadow-bottom" id="page3" uk-scrollspy="cls: uk-animation-slide-left; repeat: true;">
 			    		<img class="uk-border-rounded" data-src="assets/img/pepe_silvia_meme.jpeg" width="300" uk-img>
@@ -186,7 +189,7 @@
 					</p>
 
 					<p>
-						 As you might imagine, this makes getting from one location to another take less time. In a sense, we've made our simulated world <i>smaller</i>.
+						 As you might imagine, this makes getting from one location to another take fewer steps. In a sense, we've made our simulated world <i>smaller</i>.
  					</p>
  					<p>
  						This type of network, where there is a strong local component (like our ring) with some global interactions, is an example of a <b>Small World Network</b>. It turns out these networks pop up all over the place: <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002522" target="_blank" class="uk-link-muted">neurons</a>, <a href="https://royalsocietypublishing.org/doi/10.1098/rspb.2001.1711" target="_blank" class="uk-link-muted">genes</a>, <a href="https://www.nature.com/articles/30918." target="_blank" class="uk-link-muted">electrical grids</a>, and our <a href="https://arxiv.org/abs/1111.4503" target="_blank" class="uk-link-muted">Facebook social networks</a>. Most importantly for us, the <a href="https://www.nature.com/articles/srep05638" target="_blank" class="uk-link-muted">patterns of air travel</a> also have these small world properties! 
@@ -195,9 +198,9 @@
 				</article>
 			</div>
 
-			<div uk-height-viewport >
+			<div uk-height-viewport>
 
-				<article class="uk-article">
+				<article class="uk-article uk-margin-xlarge-top">
 
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Small World Pandemic</a></h1>
 
@@ -250,7 +253,7 @@
 			    	</p>
 
 			    	<p id="plot_marker" uk-scrollspy="repeat:true;">
-			    		You can press the <b>Restart Simulation</b> button and start as many new virtual pandemics as you'd like! 
+			    		You can start over by pressing the <b>Restart Simulation</b> to start as many virtual pandemics as you'd like! 
 			    	</p>
 
 
@@ -258,18 +261,16 @@
 			</div>
 
 			<div uk-height-viewport >
-
-				<article class="uk-article">
-
+				<article class="uk-article uk-margin-xsmall-top" id="page5">
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">A Few Things to Try</a></h1>
 
-				    <p class="uk-text-lead" id="page5" uk-scrollspy="cls: uk-animation-fade; repeat: true;">I'm going to temporarily disable the controls</p>
+				    <p class="uk-text-lead" uk-scrollspy="cls: uk-animation-fade; repeat: true;">I'm going to temporarily disable the controls</p>
 				    <p>
-				    	If you want the controlls back after playing with some of these scenarios, all you have to do is scroll up.
+				    	If you want the controls back after playing with some of these scenarios, all you have to do is scroll up.
 				    </p>
 
 				    <p> 
-				    	Let's imagine there are 10 total migrating agents per day, and we can split them up between local or global visitors however we choose. Looking at the pathogen spread if they were all local versus if they were all global would be an interesting first comparison!
+				    	Let's imagine there are 10 total migrating agents per day, and we can split them up between local or global visitors. Looking at the pathogen spread if they were all local versus if they were all global would be an interesting first comparison!
 				    </p>
 				    <p>
 				    	Click the buttons below to run these scenarios automatically with a random agent exposed after 2 days. 
@@ -283,11 +284,41 @@
 						It's shocking how much slower the pandemic spread is when there are only local visitors, isn't it?! Here's a few screenshots I grabbed while running it myself. 
 
 					</p>
-				    <p class="uk-text-lead uk-margin-large-top" uk-scrollspy="cls: uk-animation-fade; repeat: true;">What happens with just a couple of global visitors?
+					<div class="uk-child-width-1-2@m" uk-grid>
+					    <div>
+					        <div class="uk-card uk-card-small uk-box-shadow-small">
+					            <div class="uk-card-media-top">
+					                <img src="assets/img/all_local.png" alt="">
+					            </div>
+					            <div class="uk-card-body">
+					                <h4>All Local Visitors</h4>
+					            </div>					            
+					        </div>
+					    </div>
+				    <div>
+					        <div class="uk-card uk-card-small uk-box-shadow-small">								
+								<div class="uk-card-media-top">
+					                <img src="assets/img/all_global.png" alt="">
+					            </div>
+								<div class="uk-card-body">
+					                <h4>All Global Visitors</h4>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+
+				    <p class="uk-text-lead uk-margin-large-top" uk-scrollspy="cls: uk-animation-fade; repeat: true;">
+				    	Now Let's Try With *Mostly* Local Visitors
 				    </p>
 
 					<button id="8_2_btn" class="uk-button uk-button-primary uk-button-small" href="">8-2 Local-Global</button>
 					
+					<button id="9_1_btn" class="uk-button uk-button-primary uk-button-small" href="">9-1 Local-Global</button>
+
+				    <p class="uk-margin-xlarge-top">
+				    	Although clearly slower than the All Global scenario, the pandemic still spreads surprisingly fast with just one or two global visitors!
+				    </p>
+
 				</article>
 
 				<div class="uk-card uk-card-secondary uk-card-body uk-margin-xlarge">
@@ -295,11 +326,12 @@
 					<p>
 						Somewhere local, hopefully. Better yet, nowhere if you can help it. As you've seen first-hand, even a little bit of exposure between communities can dramatically speed up the spread of a pathogen. Right now, we need to make our world <b>bigger</b>, not <b>smaller</b>.
 					</p>
+
 					<p>
 						Hopefully you can see why these seemingly draconian lockdown orders have been used to limit the spread of COVID-19. They work!
 					</p>
 					<p>
-						But, I do understand that people can't stay home forever. We need to figure out the best ways to <b>safely</b> move forward. My biggest fear is that too many people are equating a loosening of the lockdowns with a loosening of their own precautions.  
+						But, I do understand that people can't stay home forever. We need to figure out the best ways to <b>safely</b> move forward. I'm afraid that too many people are equating the lockdown loosening with this pandemic becoming less serious.
 					</p>
 
 					<p>
@@ -311,7 +343,7 @@
 
 		</div>
 		<div class="uk-width-1-6 uk-flex-column uk-flex-right uk-align-right uk-margin-xlarge-top">
-		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset: 500" uk-sticky="offset: 200">
+		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset: 480" uk-sticky="offset: 200">
 	    		<li><a href="#page1">It's a Small World</a></li>
 	    		<li><a href="#page2">Local Movement</a></li>
 	    		<li><a href="#page3">Global Movement</a></li>
