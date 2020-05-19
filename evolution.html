@@ -98,7 +98,7 @@
 					</p>
 
 					<p>
-						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Evolutionary misconceptions became misinformation overnight. Thanks to an amazing community of scientists and science reporters, the claim was quickly addressed. One of my favorites was <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the amazing Ed Yong.
+						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Evolutionary misconceptions became misinformation overnight. Thanks to an amazing community of scientists and science reporters, the claim was quickly addressed. One of my favorite articles is <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the amazing Ed Yong.
 
 					</p>
 					<p>
@@ -109,7 +109,7 @@
 					</p>
 
 					<p>
-					<div class="uk-card uk-card-default uk-card-secondary uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
+					<div class="uk-card uk-card-default uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
 
 						If you missed the last walkthroughs building up the Infectious Matter simulator, I recommend checking them out first. Here's a link to the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">first</a> and <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">second</a>. Otherwise, keep scrolling!
 						
@@ -131,7 +131,7 @@
 				    	We're going to start off coloring all susceptible agents in shades of gray. We'll change their color as they become infected. 
 					</p>
 					<p>
-				    	Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between subpopulations. You can control the number of these visitors using the sliders below.
+				    	Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between locations. You can control the number of these visitors using the sliders below.
 				    </p>
 				    <p>
 
@@ -181,8 +181,18 @@
 			    			</tr>
 			    		</tbody>
 			    	</table>
+				    
+				</article>
+			</div>
+
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
+
+				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
 				    <p>
-				    					    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
+				    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
 
 
 				    	For starters, we'll seed the world with two distinct pathogen genotypes. Since we haven't enabled mutations yet, every new pathogen node is connected to one of the two introduced progenitors.
@@ -197,17 +207,7 @@
 				    </p>
 				    <p>
 				    	Now let's turn on the mutations! 
-				    </p>
-				</article>
-			</div>
-
-			<div uk-height-viewport>
-				<article class="uk-article">
-
-				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
-
-				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
-				    	
+				    </p>	
 				    <p>
 				    	Although we've enabled mutations, we're not changing any of the pathogen's biological features. We're not introducing any new strains. In fact, the only thing we're changing in this simulation is the color.
 				    </p>
