@@ -90,24 +90,22 @@
 				    </p>
 
 					<p>
-						Evolution is one of those deceptively tricky topics that at first seems simple and intuitive. We can even boil it down into quips like <i>survival of the fittest</i> or, more accurately, <i>descent with modification</i>. The problem is that simple processes can give rise to incredibly complex and (yes I'm going to be that nerdy) beautiful patterns that challenge our intuition.
+						Evolution is one of those deceptively tricky topics that at first seems simple and intuitive. We can even boil it down into quips like <i>survival of the fittest</i> or, more accurately, <i>descent with modification</i>. The problem is that simple processes can give rise to incredibly complex and (yes I'm going to be that nerdy) beautiful patterns that challenge our intuition. This is one of the reasons why <a href="https://evolution.berkeley.edu/evolibrary/misconceptions_faq.php" class="uk-link-muted" target="_blank">misconceptions of evolution</a> are notorious challenges for high school and university education. 
+					</p>
+
+					<p>But evolutionary misconceptions can become misinformation overnight.</p>
+					
+					<p>
+						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Thanks to an amazing community of scientists and science reporters, this unproven claim was quickly addressed. One of my favorite articles is <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the fantastic Ed Yong.
 					</p>
 
 					<p>
-						This is one of the reasons why <a href="https://evolution.berkeley.edu/evolibrary/misconceptions_faq.php" class="uk-link-muted" target="_blank">misconceptions of evolution</a> are notorious challenges for high school and university education. 
-					</p>
-
-					<p>
-						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Evolutionary misconceptions became misinformation overnight. Thanks to an amazing community of scientists and science reporters, the claim was quickly addressed. One of my favorite articles is <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the amazing Ed Yong.
+						As you can imagine, understanding how pathogens evolve during a pandemic is definitely not a common skill even among biologists. It's especially challenging since both the spread and the evolution of a disease are complex processes that resist being put into small or easily-understood packages. 
 
 					</p>
 					<p>
-						A new <b>Genotype</b> is most likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
+						In this walkthrough, we'll explore how <b>Neutral</b> mutations, which have no effect on how a disease spreads, create patterns that look like a more infectious strain is emerging.
 					</p>
-					<p>
-						In this walkthrough, you'll watch an evolving pathogen spread into multiple locations right here in the browser so you can observe founder effects in action!
-					</p>
-
 					<p>
 					<div class="uk-card uk-card-default uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
 
@@ -126,63 +124,47 @@
 
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Visualizing Pathogen Variation</a></h1>
 
-				    <p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true;"></p>
+				    <p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true;">In Living Color</p>
 				    <p>
-				    	We're going to start off coloring all susceptible agents in shades of gray. We'll change their color as they become infected. 
+				    	We'll start by coloring all of the susceptible agents in a darkish gray tone. That will let us use color to visualize the variation in the pathogen that is spreading through the world. 
 					</p>
 					<p>
-				    	Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between locations. You can control the number of these visitors using the sliders below.
-				    </p>
+						When a pathogen like a virus is replicating within its host, mutations are constalty produced by chance. Most of the time these mutations are bad (<b>Deleterious</b>), sometimes they have no effect at all (<b>Neutral</b>), and rarely they might improve the pathogen's replication, transmission, or survival and are <b>Beneficial</b>. Here, we'll focus on the neutral mutations that have no effect on a pathogen's biological properties. 
+					</p>
+
+					<div class="uk-child-width-1-3@m" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 300; repeat: true" uk-sticky data-uk-sticky="{boundary: '#page7'}">
+>
+					    <div>
+					        <div class="uk-card uk-card-default uk-card-body">
+					            <h3 class="uk-card-title">Bottom</h3>
+					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					        </div>
+					    </div>
+					    <div>
+					        <div class="uk-card uk-card-default uk-card-body" uk-scrollspy-class="uk-animation-slide-top">
+					            <h3 class="uk-card-title">Top</h3>
+					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					        </div>
+					    </div>
+					    <div>
+					        <div class="uk-card uk-card-default uk-card-body">
+					            <h3 class="uk-card-title">Bottom</h3>
+					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+					        </div>
+					    </div>
+					</div>
+				    <p>
+
+					</p>
+
 				    <p>
 
 				    </p> 
-				    <div uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
-						<div id="simContainer">
-							<div class="no_wrap" id="phyloDiv"></div>
-							<div class="no_wrap  uk-box-shadow-medium" id="matterDiv"></div>
-							<div class="no_wrap" id="graphDiv"></div>
-						</div>
-					</div>
-
-				    <table class="uk-table uk-table-small" uk-sticky="offset:355" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
-			    		<tbody>
-			    			<tr>
-			    				<td><b>Local Visitors Per Day:</b></td>
-			    				<td>
-			    					<div class="uk-form-width-medium">
-
-			    						<input id="localMigrationSlider_p5" class="slider" type="range" min=0 max=30 step=1 value=10>
-			    					</div>
-			    				</td>
-			    				<td>
-			    					<div class="uk-form-width-medium">
-			    						<span id="localMigrationBadge_p5" class="uk-badge uk-badge-notification">10</span>
-			    					</div>
-			    				</td>
-			    			</tr>
-			    			<tr>
-			    				<td><b>Global Visitors Per Day:</b></td>
-			    				<td>
-			    					<div class="uk-form-width-medium">
-			    						<input id="globalMigrationSlider_p5" class="slider" type="range" min=0 max=30 step=1 value=0>
-			    					</div>
-			    				</td>
-			    				<td>
-			    					<div class="uk-form-width-medium">
-			    						<span id="globalMigrationBadge_p5" class="uk-badge uk-badge-notification">0</span>
-			    					</div>
-			    				</td>
-			    			</tr>
-			    			<tr>
-			    				<td><button id="infect_btn" class="uk-button uk-button-primary uk-button-small" href="">Infect Random Agent</button> </td>
-			    				<td>
-			    					<button id="restart_btn" class="uk-button uk-button-primary uk-button-small" href="">Restart Simulation</button> 
-			    				</td>
-			    			</tr>
-			    		</tbody>
-			    	</table>
-				    
+				   
 				</article>
+				<p>
+					Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between locations. You can control the number of these visitors using the sliders above.
+				</p>
 			</div>
 
 			<div uk-height-viewport>
@@ -192,6 +174,9 @@
 
 				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
 				    <p>
+				    							A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
+
+
 				    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
 
 
@@ -243,6 +228,114 @@
 
 
 			</div>
+			<div uk-height-viewport>
+			</div>
+			<div uk-height-viewport>
+				 <div  id="sim_div" uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
+						<div id="simContainer">
+							<div class="no_wrap" id="phyloDiv"></div>
+							<div class="no_wrap  uk-box-shadow-medium" id="matterDiv"></div>
+							<div class="no_wrap" id="graphDiv"></div>
+						</div>
+					</div>
+
+				    <table class="uk-table uk-table-small" uk-sticky="offset:355" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
+			    		<tbody>
+			    			<tr>
+			    				<td><b>Local Visitors Per Day:</b></td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+
+			    						<input id="localMigrationSlider_p5" class="slider" type="range" min=0 max=30 step=1 value=10>
+			    					</div>
+			    				</td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+			    						<span id="localMigrationBadge_p5" class="uk-badge uk-badge-notification">10</span>
+			    					</div>
+			    				</td>
+			    			</tr>
+			    			<tr>
+			    				<td><b>Global Visitors Per Day:</b></td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+			    						<input id="globalMigrationSlider_p5" class="slider" type="range" min=0 max=30 step=1 value=0>
+			    					</div>
+			    				</td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+			    						<span id="globalMigrationBadge_p5" class="uk-badge uk-badge-notification">0</span>
+			    					</div>
+			    				</td>
+			    			</tr>
+			    			<tr>
+			    				<td><button id="infect_btn" class="uk-button uk-button-primary uk-button-small" href="">Infect Random Agent</button> </td>
+			    				<td>
+			    					<button id="restart_btn" class="uk-button uk-button-primary uk-button-small" href="">Restart Simulation</button> 
+			    				</td>
+			    			</tr>
+			    		</tbody>
+			    	</table>
+			</div>
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
+
+				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
+				    <p>
+				    							A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
+
+
+				    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
+
+
+				    	For starters, we'll seed the world with two distinct pathogen genotypes. Since we haven't enabled mutations yet, every new pathogen node is connected to one of the two introduced progenitors.
+				    </p>
+
+				    <p>
+				    	If you haven't already, try restarting the simulation and clicking the Infect Random Agent button several (>5) times.
+				    </p>
+
+				    <p>
+				    	You probably noticed that some of the nodes were more active than others in the phylogenetic network and ended up with larger clumps of descendants. Those were the lucky genotypes that by chance spread to more locations and produced more offspring. However, these genotypes are functionally identical to each other. In microbiology lingo, they different genotypes of the same <b>Strain</b>.
+				    </p>
+				    <p>
+				    	Now let's turn on the mutations! 
+				    </p>	
+				    <p>
+				    	Although we've enabled mutations, we're not changing any of the pathogen's biological features. We're not introducing any new strains. In fact, the only thing we're changing in this simulation is the color.
+				    </p>
+				    <p>
+				    	Even so, you'll probably see what looks like a new strain spreading in the metapopulation! But, you're just seeing founder effects in action. 
+
+				    </p>
+				    
+				    <p>
+				    	Be sure to investigate how the amount of local and global movement affects the spread of pathogen mutants. For example, what happens at the two extremes of only local or only global movement? Remember, this is a stochastic simulation, so you'll have to run it a few times to get a sense of the range of possible outcomes. 
+				    </p>
+
+				    <p>
+				    	It's easy to imagine seeing these patterns and wanting to attribute them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. But for now, we can get back to arguing about whether viruses are alive or not. 
+				    </p>
+				    <p>
+				    	<div class="uk-card uk-card-default uk-card-primary uk-box-shadow-large uk-card-body uk-width-4-5 uk-align-center uk-flex-center">
+							<b>Although there is only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! Keep doing your part to reduce transmission. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.</b>
+						</div>
+					</p>
+
+						<table>
+							<tbody>
+							<tr>
+			    				<td><button id="zoom_in" class="uk-button uk-button-primary uk-button-small" href="">Zoom In</button> </td>
+			    				<td>
+			    					<button id="zoom_out" class="uk-button uk-button-primary uk-button-small" href="">Zoom Out</button> 
+			    				</td>
+			    			</tr>
+			    			</tbody>
+			    		</table>
+				</article>
+
 
 		</div>
 		<div class="uk-width-1-6 uk-flex-column uk-flex-right uk-margin-xlarge-top uk-margin-large-left ">
@@ -263,3 +356,13 @@
 	<script src="bundle_evosim.js" charset="UTF-8"></script>
 	</body>
 </html>
+
+<!-- 
+						<p>
+						An error like claiming there is a new SARS-CoV-2 strain circulating would have been caught during the typical peer review process, where a paper gets evaluated by a handfull of experts. If it somehow managed to get past the peer reviewers, at the very least the claims would be challenged in a series of comments published along side the paper. If a science reporter came across this work, they would immediately know there were issues the scientfic community was working through. It's important we don't forget how the scientific process works, and how it relies on building up knowledge on foundations that have been tried and tested over and over.
+					</p>
+					<p>
+						That's the way science communication worked <i>before</i> the pandemic. People are rightfully eagre to hear the latest findings from scientists all over the world collectively trying to understand COVID-19.
+					</p>
+!-->
+
