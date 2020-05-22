@@ -421,7 +421,7 @@ window.onload = function() {
         InfectiousMatterSim.add_event({time: 1000, callback: InfectiousMatterSim.global_migrate_event(), recurring: true });
 
         InfectiousMatterSim.add_event( {
-            time: InfectiousMatterSim.simulation_params.sim_time_per_day * 3,
+            time: InfectiousMatterSim.simulation_params.sim_time_per_day * 2,
             callback: function() {
                 //
                 for (let i=0; i < world_params.num_to_infect; i++) {
@@ -443,7 +443,18 @@ window.onload = function() {
             }
         });
     }
+    let set_sliders = function(num_local, num_global) {
 
+        document.getElementById('globalMigrationSlider_p5').value = num_global;
+        document.getElementById('globalMigrationBadge_p5').innerHTML = num_global;
+
+        document.getElementById('localMigrationSlider_p5').value = num_local;
+        document.getElementById('localMigrationBadge_p5').innerHTML = num_local;
+        
+        document.getElementById('mutation_slider').value = InfectiousMatterSim.simulation_params.pathogen_mut_prob;
+        document.getElementById('mutation_badge').innerHTML = InfectiousMatterSim.simulation_params.pathogen_mut_prob;
+
+    };
 
 
     let clear_simulation = function() {
@@ -482,7 +493,7 @@ window.onload = function() {
         document.getElementById('graphDiv').style.visibility = "hidden";
 
         InfectiousMatterSim.infection_params.use_pathogen_contagiousness = false;
-        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.25;
+        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.0;
         world_params.num_to_infect = 1;
 
         setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
@@ -491,25 +502,35 @@ window.onload = function() {
     })
 
 
-    UIkit.util.on("#page3", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "visible";
+
+    UIkit.util.on("#mutation_img", 'inview', function(e) {
+        //TODO: reset phylo network canvas...
+        PhyloGraph.clear();
+
+        document.getElementById('phyloDiv').style.visibility = "hidden";
         document.getElementById('graphDiv').style.visibility = "visible";
 
+        InfectiousMatterSim.infection_params.use_pathogen_contagiousness = false;
+        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.25;
+        world_params.num_to_infect = 1;
+
+        setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
+
     });
+
+
+
+
+
+    UIkit.util.on("#page3", 'inview', function(e) {
+        document.getElementById('phyloDiv').style.visibility = "hidden";
+        document.getElementById('graphDiv').style.visibility = "visible";
+    });
+
     UIkit.util.on("#page4", 'inview', function(e) {
         document.getElementById('phyloDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
-        world_params.num_local_visitors = 10;
-        world_params.num_global_visitors = 0;
-
-    });
-
-    UIkit.util.on("#page5", 'inview', function(e) {
-        document.getElementById('phyloDiv').style.visibility = "hidden";
-        document.getElementById('graphDiv').style.visibility = "visible";
-        world_params.num_local_visitors = 10;
-        world_params.num_global_visitors = 0;
-
+        zoom_interval = setInterval(zoomOut, 500);
 
     })
     
@@ -524,7 +545,7 @@ window.onload = function() {
         world_params.num_to_infect = 1;
         pathogen_mut_prob: 0.0
         //setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
-        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.25;
+        InfectiousMatterSim.simulation_params.pathogen_mut_prob = 0.0;
         zoom_interval = setInterval(zoomOut, 500);
     })
 
@@ -572,12 +593,23 @@ window.onload = function() {
 
     });
 
+    UIkit.util.on("#mutation_slider", 'input', function(e) {
+        let badge = document.getElementById('mutation_badge');
+        badge.innerHTML = e.target.value;
+
+        InfectiousMatterSim.simulation_params.pathogen_mut_prob = e.target.value;
+
+    });
+
+
     let setup_evo_sim = function(num_local_visitors, num_global_visitors) {
         world_params.num_local_visitors = num_local_visitors;
         world_params.num_global_visitors = num_global_visitors;
+        set_sliders(num_local_visitors, num_global_visitors);
 
         clear_simulation();
         reset_population();
+
 
     }
 
@@ -588,10 +620,5 @@ window.onload = function() {
         setup_evo_sim(world_params.num_local_visitors, world_params.num_global_visitors);
     }
 
-    document.getElementById('infect_btn').onclick = function() {
-        let random_agent = Matter.Common.choose(InfectiousMatterSim.agents);
-        InfectiousMatterSim.expose_org(random_agent.body, AgentStates.S_INFECTED);
-
-    }
 
 }

@@ -11,6 +11,12 @@
 		</script>
 
 		  <style>
+		  		div.img_container {
+		  			background-size: contain;
+		  			background-repeat: no-repeat;
+					background-position: center;
+
+		  		}
 		  		a.uk-link-muted {
 		  			border-bottom: 1px dashed #999999;
 		  		}
@@ -104,7 +110,7 @@
 
 					</p>
 					<p>
-						In this walkthrough, we'll explore how <b>Neutral</b> mutations, which have no effect on how a disease spreads, create patterns that look like a more infectious strain is emerging.
+						In this walkthrough, we'll explore how <b>Neutral</b> mutations, which have no effect on how a disease spreads, create patterns that look as if a more infectious strain is emerging.
 					</p>
 					<p>
 					<div class="uk-card uk-card-default uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
@@ -126,112 +132,9 @@
 
 				    <p class="uk-text-lead" id="page2" uk-scrollspy="cls: uk-animation-fade; repeat: true;">In Living Color</p>
 				    <p>
-				    	We'll start by coloring all of the susceptible agents in a darkish gray tone. That will let us use color to visualize the variation in the pathogen that is spreading through the world. 
+				    	We'll start by coloring all of the susceptible agents in a darkish gray tone. Now we can use color to visualize the differences in the pathogens that are spreading through the world. You'll see a single agent become infected and turn light blue. As the pathogen spreads and more agents become infected, you'll see them also turn blue.
 					</p>
-					<p>
-						When a pathogen like a virus is replicating within its host, mutations are constalty produced by chance. Most of the time these mutations are bad (<b>Deleterious</b>), sometimes they have no effect at all (<b>Neutral</b>), and rarely they might improve the pathogen's replication, transmission, or survival and are <b>Beneficial</b>. Here, we'll focus on the neutral mutations that have no effect on a pathogen's biological properties. 
-					</p>
-
-					<div class="uk-child-width-1-3@m" uk-grid uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; delay: 300; repeat: true" uk-sticky data-uk-sticky="{boundary: '#page7'}">
->
-					    <div>
-					        <div class="uk-card uk-card-default uk-card-body">
-					            <h3 class="uk-card-title">Bottom</h3>
-					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					        </div>
-					    </div>
-					    <div>
-					        <div class="uk-card uk-card-default uk-card-body" uk-scrollspy-class="uk-animation-slide-top">
-					            <h3 class="uk-card-title">Top</h3>
-					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					        </div>
-					    </div>
-					    <div>
-					        <div class="uk-card uk-card-default uk-card-body">
-					            <h3 class="uk-card-title">Bottom</h3>
-					            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					        </div>
-					    </div>
-					</div>
-				    <p>
-
-					</p>
-
-				    <p>
-
-				    </p> 
-				   
-				</article>
-				<p>
-					Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between locations. You can control the number of these visitors using the sliders above.
-				</p>
-			</div>
-
-			<div uk-height-viewport>
-				<article class="uk-article">
-
-				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
-
-				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
-				    <p>
-				    							A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
-
-
-				    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
-
-
-				    	For starters, we'll seed the world with two distinct pathogen genotypes. Since we haven't enabled mutations yet, every new pathogen node is connected to one of the two introduced progenitors.
-				    </p>
-
-				    <p>
-				    	If you haven't already, try restarting the simulation and clicking the Infect Random Agent button several (>5) times.
-				    </p>
-
-				    <p>
-				    	You probably noticed that some of the nodes were more active than others in the phylogenetic network and ended up with larger clumps of descendants. Those were the lucky genotypes that by chance spread to more locations and produced more offspring. However, these genotypes are functionally identical to each other. In microbiology lingo, they different genotypes of the same <b>Strain</b>.
-				    </p>
-				    <p>
-				    	Now let's turn on the mutations! 
-				    </p>	
-				    <p>
-				    	Although we've enabled mutations, we're not changing any of the pathogen's biological features. We're not introducing any new strains. In fact, the only thing we're changing in this simulation is the color.
-				    </p>
-				    <p>
-				    	Even so, you'll probably see what looks like a new strain spreading in the metapopulation! But, you're just seeing founder effects in action. 
-
-				    </p>
-				    
-				    <p>
-				    	Be sure to investigate how the amount of local and global movement affects the spread of pathogen mutants. For example, what happens at the two extremes of only local or only global movement? Remember, this is a stochastic simulation, so you'll have to run it a few times to get a sense of the range of possible outcomes. 
-				    </p>
-
-				    <p>
-				    	It's easy to imagine seeing these patterns and wanting to attribute them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. But for now, we can get back to arguing about whether viruses are alive or not. 
-				    </p>
-				    <p>
-				    	<div class="uk-card uk-card-default uk-card-primary uk-box-shadow-large uk-card-body uk-width-4-5 uk-align-center uk-flex-center">
-							<b>Although there is only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! Keep doing your part to reduce transmission. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.</b>
-						</div>
-					</p>
-
-						<table>
-							<tbody>
-							<tr>
-			    				<td><button id="zoom_in" class="uk-button uk-button-primary uk-button-small" href="">Zoom In</button> </td>
-			    				<td>
-			    					<button id="zoom_out" class="uk-button uk-button-primary uk-button-small" href="">Zoom Out</button> 
-			    				</td>
-			    			</tr>
-			    			</tbody>
-			    		</table>
-				</article>
-
-
-			</div>
-			<div uk-height-viewport>
-			</div>
-			<div uk-height-viewport>
-				 <div  id="sim_div" uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
+					<div  id="sim_div" uk-sticky class="uk-align-center" style="height:355; background: rgba(255, 255, 255, 0.95); z-index: 100">
 						<div id="simContainer">
 							<div class="no_wrap" id="phyloDiv"></div>
 							<div class="no_wrap  uk-box-shadow-medium" id="matterDiv"></div>
@@ -239,7 +142,168 @@
 						</div>
 					</div>
 
-				    <table class="uk-table uk-table-small" uk-sticky="offset:355" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
+					<p>
+						When a pathogen (like a virus) is replicating within its host, mutations are constalty produced by chance. Most of the time these mutations are harmful to the pathogen (or <b>Deleterious</b>), sometimes they have no effect at all (<b>Neutral</b>), and very rarely they improve the pathogen's fitness and are considered <b>Beneficial</b>. 
+					</p>
+
+				    <p>
+				    	Here, we'll focus on <b>Neutral</b> mutations that have no effect on a pathogen's biological properties. 
+					</p>
+					
+				</article>
+			</div>
+			<div uk-height-viewport class="uk-margin-xlarge-bottom">
+				<article class="uk-article">
+					<p class="uk-text-lead">We'll visualize these neutral mutations by changing the color of the infected agent.</p>
+
+				    <div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/one_agent.png" uk-img>
+						    </div>
+					    </div>
+					</div>
+
+				   	<p>
+				   		The light blue color you've been watching spread through the world is really just an arbitrary starting position in this color scale. 
+				   	</p>
+
+				   	<div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small" data-src="assets/img/evolution/one_agent.png" uk-img>
+						    </div>
+					    </div>
+
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small" data-src="assets/img/evolution/multiple_agent.png" uk-img>
+						    	<h3 class="uk-card-title"></h3>					     
+						    </div>
+					    </div>
+					</div>	
+				 	<p>
+				   		I haven't turned on pathogen mutations yet, so every new infected agent has the same color. In other words, there is only one <b>Genotype</b> of the pathogen right now, the light blue one. 
+				   	</p>
+				   	<p>
+				   		The term <b>Genotype</b> lets us talk about groups of organisms that share the same set of mutations. We don't call these different <b>Strains</b> because none of these mutations affect how the pathogen behaves. Remember, we're only simulating neutral mutations. 
+				   	</p>
+
+				   	<div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small" data-src="assets/img/evolution/one_agent.png" uk-img>
+						    </div>
+					    </div>
+
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small" data-src="assets/img/evolution/multiple_agent.png" uk-img>
+						    	<h3 class="uk-card-title"></h3>					     
+						    </div>
+					    </div>
+					    <div id="mutation_img" class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small" data-src="assets/img/evolution/mutation.png" uk-img>
+						    	<h3 class="uk-card-title"></h3>					     
+						    </div>
+					    </div>
+					</div>	
+					<p class="uk-text-lead">Let's turn on mutations now</p>
+				   	<p>
+				   		I've reset the simulation and turned on mutations. Right now the mutation probability is set to 0.25. That means on average 1 out of 4 infections will produce a new pathogen genotype (and a new color)!
+				   	</p>			
+
+				</article>
+			</div>
+			<div uk-height-viewport class="uk-margin-xlarge-bottom">
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Visualizing Descent</a></h1>
+
+				    <p class="uk-text-lead" id="page3" uk-scrollspy="cls: uk-animation-fade; repeat: true;">The other ingredient of evolution
+				    </p>
+				   	<div class="" id="page3" uk-scrollspy="cls: uk-animation-slide-left; repeat: true;">
+			    		<img class="uk-border-rounded uk-box-shadow-medium" data-src="assets/img/evolution/darwin_phylo.png" width="300" uk-img>
+			    	</div>
+				
+					<p>
+						We've added color to help us see the variation between pathogen genotypes, but the <b>Relationship</b> between genotypes is a crucial part of the evolutionary picture. 
+					</p>
+					<p>
+						Charles Darwin sketched one of the most intuitive ways of seeing these relationships when he was working out the evolutionary process for himself in 1837. <a href="https://www.amnh.org/exhibitions/darwin/the-idea-takes-shape/i-think" target="_blank" class="uk-link-muted">The image above</a> is from one of his early notebooks. 
+					</p>
+					<p>
+						We're going to build up a similar visualization of the <b>Phylogenetic Network</b> for our evolving pathogen! 
+					</p>
+
+				    <div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/one_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					</div>
+					<p>
+						Everytime a new infection occurs, we'll add a node to the phylogenetic network and color it based on the genotype of the new pathogen. We'll connect this <b>Child</b> genotype node to it's <b>Parent</b> genotype in the network by drawing an edge between the two.
+					</p>
+					<div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/one_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					    <div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/two_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					    <div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/star_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					</div>
+					<p>
+						If there are no mutations, then every new node we add is connected to the original pathogen genotype. What you would expect to see in this case is a kind of star network. In order to escape this star, we need mutations to create new genotypes! 
+					</p>
+					<div class="uk-child-width-1-4@m" uk-grid uk-grid-match uk-scrollspy="cls: uk-animation-slide-bottom; target: .uk-card; repeat: true; offset-top:-300">
+				    	
+				    	<div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/one_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					    <div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/two_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					    <div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/star_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					    <div class="uk-card">
+					        <div class="uk-card uk-card-default uk-card-body img_container uk-height-small uk-padding-large" data-src="assets/img/evolution/mutations_phylonet.png" uk-img>
+						    </div>
+					    </div>
+					</div>
+					<p>
+						With mutations, we get more interesting networks that depict the genetic relationships between pathogens! You might even see a new genotype spreading, like the pathogens depicted with dark blue nodes. 
+					</p>
+					<p>
+						Let's turn the Phylogenetic Netowrk on in our simulation now. 
+					</p>
+				</article>
+			</div>
+
+			<div uk-height-viewport>
+				<article class="uk-article">
+
+				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">It's (still) a small world</a></h1>
+
+				    <p class="uk-text-lead" id="page4" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Bringing back the controlls</p>
+				   	<p>
+					Like in the <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">Small World walkthrough</a>, there is a combination of local and global movememnt between locations. You can control the number of these visitors using the sliders below.
+					</p>
+
+					<p>
+						I've added a new slider that lets you turn up or down the probability that the pathogen mutates as it spreads between agents. 
+					</p>
+					<table class="uk-table uk-table-small" uk-sticky="offset:355" style="background: rgba(255, 255, 255, 0.95); z-index: 100">
 			    		<tbody>
 			    			<tr>
 			    				<td><b>Local Visitors Per Day:</b></td>
@@ -251,7 +315,7 @@
 			    				</td>
 			    				<td>
 			    					<div class="uk-form-width-medium">
-			    						<span id="localMigrationBadge_p5" class="uk-badge uk-badge-notification">10</span>
+			    						<span id="localMigrationBadge_p5" class="uk-badge uk-badge-notification uk-padding-small">10</span>
 			    					</div>
 			    				</td>
 			    			</tr>
@@ -264,63 +328,71 @@
 			    				</td>
 			    				<td>
 			    					<div class="uk-form-width-medium">
-			    						<span id="globalMigrationBadge_p5" class="uk-badge uk-badge-notification">0</span>
+			    						<span id="globalMigrationBadge_p5" class="uk-badge uk-badge-notification uk-padding-small">0</span>
 			    					</div>
 			    				</td>
 			    			</tr>
 			    			<tr>
-			    				<td><button id="infect_btn" class="uk-button uk-button-primary uk-button-small" href="">Infect Random Agent</button> </td>
+			    				<td><b>Mutation Probability:</b></td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+			    						<input id="mutation_slider" class="slider" type="range" min=0 max=1 step=0.05 value=0.25>
+			    					</div>
+			    				</td>
+			    				<td>
+			    					<div class="uk-form-width-medium">
+			    						<span id="mutation_badge" class="uk-badge uk-badge-notification uk-padding-small">0.25</span>
+			    					</div>
+			    				</td>
+			    			</tr>
+
+			    			<tr>
 			    				<td>
 			    					<button id="restart_btn" class="uk-button uk-button-primary uk-button-small" href="">Restart Simulation</button> 
 			    				</td>
 			    			</tr>
 			    		</tbody>
 			    	</table>
+				    <p>
+				    	I've also brought back the contact graph, where each node represents an agent, and an edge depicts a contact that happened between those two agents in the last 7 days of the simulation. The nodes in the contact graph will also change colors so you can see the spread of the pathogen!
+					</p>
+				</article>
+
+
 			</div>
+
 			<div uk-height-viewport>
 				<article class="uk-article">
 
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
 
-				    <p class="uk-text-lead" id="page7" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Descent with modification!</p>
-				    <p>
-				    							A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
-
-
-				    	To get a visual sense of the evolutionary dynamics going on in the pathogen population, we'll create a network depicting the genetic relationships between pathogens. This <b>Phylogenetic Network</b> will show each <b>Descendant</b> (child) genotype connected to it's <b>Progenitor</b> (parent). 
-
-
-				    	For starters, we'll seed the world with two distinct pathogen genotypes. Since we haven't enabled mutations yet, every new pathogen node is connected to one of the two introduced progenitors.
-				    </p>
+				    <p class="uk-text-lead" id="page5" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Not as scary as they sound...</p>
 
 				    <p>
-				    	If you haven't already, try restarting the simulation and clicking the Infect Random Agent button several (>5) times.
-				    </p>
-
-				    <p>
-				    	You probably noticed that some of the nodes were more active than others in the phylogenetic network and ended up with larger clumps of descendants. Those were the lucky genotypes that by chance spread to more locations and produced more offspring. However, these genotypes are functionally identical to each other. In microbiology lingo, they different genotypes of the same <b>Strain</b>.
-				    </p>
-				    <p>
-				    	Now let's turn on the mutations! 
-				    </p>	
-				    <p>
-				    	Although we've enabled mutations, we're not changing any of the pathogen's biological features. We're not introducing any new strains. In fact, the only thing we're changing in this simulation is the color.
-				    </p>
-				    <p>
-				    	Even so, you'll probably see what looks like a new strain spreading in the metapopulation! But, you're just seeing founder effects in action. 
-
+				    	You probably noticed that some of the nodes were more active than others in the phylogenetic network. The active ones ended up in large clumps. Those were the lucky genotypes that by chance spread to more locations and produced more offspring. However, these genotypes are functionally identical to each other. In microbiology lingo, they different genotypes of the same <b>Strain</b>.
 				    </p>
 				    
 				    <p>
-				    	Be sure to investigate how the amount of local and global movement affects the spread of pathogen mutants. For example, what happens at the two extremes of only local or only global movement? Remember, this is a stochastic simulation, so you'll have to run it a few times to get a sense of the range of possible outcomes. 
+				    	Be sure to experiment with how the amount of local and global movement affects the spread of pathogen mutants. For example, what happens at the two extremes of only local or only global movement? Remember, this is a stochastic simulation, so you'll have to run it a few times to get a sense of the range of possible outcomes. 
 				    </p>
+			 		
+			 		<p>
+			 			It's also a lot of fun to play with the mutation probability, and watch how it affects the phylogenetic network! 
+			 		</p>
+				    
+				    <p class="uk-text-lead uk-margin-xlarge-top" uk-scrollspy="cls: uk-animation-fade; repeat: true;">Wrap Up</p>
 
 				    <p>
-				    	It's easy to imagine seeing these patterns and wanting to attribute them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. But for now, we can get back to arguing about whether viruses are alive or not. 
+				    	It's easy to imagine seeing these patterns in real life and attributing them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. When science and science reporting moves at the speed of a pandemic, we're all going to have to learn how to pivot quickly. 
+
 				    </p>
 				    <p>
-				    	<div class="uk-card uk-card-default uk-card-primary uk-box-shadow-large uk-card-body uk-width-4-5 uk-align-center uk-flex-center">
-							<b>Although there is only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! Keep doing your part to reduce transmission. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.</b>
+				    	But for now, we can get back to arguing about whether viruses are alive or not.
+				    </p>
+				    
+				    <p>
+				    	<div class="uk-card uk-card-default uk-card-secondary uk-box-shadow-large uk-card-body uk-width-4-5 uk-align-center uk-flex-center">
+							Although there is currently only one strain of SARS-CoV-2, the strain we have is particularly good at spreading! It's important that you keep doing your part to reduce transmission <u>especially</u> now that lockdown restrictions are being lifted. That includes staying home as much as you can, wearing masks while in public, keeping at least 6 feet of distance between people, and washing your hands often.
 						</div>
 					</p>
 
@@ -357,7 +429,9 @@
 	</body>
 </html>
 
-<!-- 
+<!-- 				    							
+
+A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
 						<p>
 						An error like claiming there is a new SARS-CoV-2 strain circulating would have been caught during the typical peer review process, where a paper gets evaluated by a handfull of experts. If it somehow managed to get past the peer reviewers, at the very least the claims would be challenged in a series of comments published along side the paper. If a science reporter came across this work, they would immediately know there were issues the scientfic community was working through. It's important we don't forget how the scientific process works, and how it relies on building up knowledge on foundations that have been tried and tested over and over.
 					</p>
