@@ -530,7 +530,7 @@ window.onload = function() {
     UIkit.util.on("#page4", 'inview', function(e) {
         document.getElementById('phyloDiv').style.visibility = "visible";
         document.getElementById('graphDiv').style.visibility = "visible";
-        zoom_interval = setInterval(zoomOut, 500);
+        zoom_interval = setInterval(zoomOut, 100);
 
     })
     

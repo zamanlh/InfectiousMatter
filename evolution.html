@@ -78,8 +78,8 @@
 	<body>
 
 	<div class="uk-container uk-flex"> 
-		<div class="uk-width-5-6 uk-flex-left uk-margin-small">
-			<div uk-height-viewport >
+		<div class="uk-width-5-6 uk-flex-left uk-margin-small ">
+			<div uk-height-viewport class="uk-margin-xlarge-botto">
 				<article class="uk-article">
 					<h1 class="uk-article-title"><a class="uk-link-reset" href="">An Evolving Pandemic</a></h1>
 
@@ -102,22 +102,33 @@
 					<p>But evolutionary misconceptions can become misinformation overnight.</p>
 					
 					<p>
-						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Thanks to an amazing community of scientists and science reporters, this unproven claim was quickly addressed. One of my favorite articles is <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the fantastic Ed Yong.
+						Recently some unpublished research made a big media splash because it claimed that a new, more contagious, strain of SARS-CoV-2 (the virus that causes COVID-19) had been spreading. Thanks to an amazing community of scientists and science reporters, this unproven claim was quickly addressed. 
+
 					</p>
+					<p>
+						One of my favorite articles is <a href="https://www.theatlantic.com/health/archive/2020/05/coronavirus-strains-transmissible/611239/" target="_blank" class="uk-link-muted">this peice</a> in The Atlantic by the fantastic Ed Yong. A <a href="https://undark.org/2020/05/14/covid-19-evolution-mutation/" class="uk-link-muted" target="_blank">slightly more technical</a> article by Jeremy Draghi and Brandon Ogbunu did a nice job of laying out the evolutionary flaws in the original study. 
+					</p>
+
+					<p>
+						While I was working on this walkthrough, a really nice analysis of 15,000 genomes came out. There's a great thread walking through the main findings, but here's one tweet that nicely sums up the main result.
+					</p>
+
+					<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">No single mutation having emerged recurrently to this day is significantly associated with increased transmission of <a href="https://twitter.com/hashtag/SARSCoV2?src=hash&amp;ref_src=twsrc%5Etfw">#SARSCoV2</a>. Instead, all those mutations are neutral or deleterious to the virus&#39; transmission, some significantly so.<br>(3/5)<a href="https://t.co/NxIlUcFDE9">https://t.co/NxIlUcFDE9</a> <a href="https://t.co/z5p6z26jKl">pic.twitter.com/z5p6z26jKl</a></p>&mdash; Prof Francois Balloux (@BallouxFrancois) <a href="https://twitter.com/BallouxFrancois/status/1263745881255354368?ref_src=twsrc%5Etfw">May 22, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 					<p>
 						As you can imagine, understanding how pathogens evolve during a pandemic is definitely not a common skill even among biologists. It's especially challenging since both the spread and the evolution of a disease are complex processes that resist being put into small or easily-understood packages. 
-
 					</p>
-					<p>
-						In this walkthrough, we'll explore how <b>Neutral</b> mutations, which have no effect on how a disease spreads, create patterns that look as if a more infectious strain is emerging.
-					</p>
-					<p>
-					<div class="uk-card uk-card-default uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
 
-						If you missed the last walkthroughs building up the Infectious Matter simulator, I recommend checking them out first. Here's a link to the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">first</a> and <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">second</a>. Otherwise, keep scrolling!
-						
-					</div>
+					<p>
+						In this walkthrough, we'll explore how <b>Neutral</b> mutations, which have no effect on how a disease spreads, can create patterns that look as if a more infectious strain is emerging.
+					</p>
+
+					<p>
+						<div class="uk-card uk-card-default uk-box-shadow-medium uk-card-body uk-width-1-2 uk-align-center uk-flex-center">
+
+							If you missed the last walkthroughs building up the Infectious Matter simulator, I recommend checking them out first. Here's a link to the <a href="https://infectiousmatter.com/" target="_blank" class="uk-link-muted">first</a> and <a href="https://infectiousmatter.com/smallworld/" target="_blank" class="uk-link-muted">second</a>. Otherwise, keep scrolling!
+							
+						</div>
 					</p>
 
 
@@ -125,7 +136,7 @@
 			</div>
 
 
-			<div uk-height-viewport>
+			<div uk-height-viewport class="uk-margin-xlarge-top">
 				<article class="uk-article">
 
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Visualizing Pathogen Variation</a></h1>
@@ -147,7 +158,10 @@
 					</p>
 
 				    <p>
-				    	Here, we'll focus on <b>Neutral</b> mutations that have no effect on a pathogen's biological properties. 
+				    	Here, we'll focus on <b>Neutral</b> mutations that have no effect on a pathogen's biological properties. As you'll see, even when mutations have no effect, the patterns of pathogen spread can look a lot like a new super strain has evolved. 
+					</p>
+					<p>
+
 					</p>
 					
 				</article>
@@ -209,8 +223,10 @@
 					<p class="uk-text-lead">Let's turn on mutations now</p>
 				   	<p>
 				   		I've reset the simulation and turned on mutations. Right now the mutation probability is set to 0.25. That means on average 1 out of 4 infections will produce a new pathogen genotype (and a new color)!
-				   	</p>			
-
+				   	</p>	
+				   	<p>		
+				    	I've also brought back the contact graph, where each node represents an agent, and an edge indicates that those two agents had contact within the past 7 days of simulation time. The nodes in the contact graph will also change colors so you can see the spread of the mutant pathogens!
+				    </p>
 				</article>
 			</div>
 			<div uk-height-viewport class="uk-margin-xlarge-bottom">
@@ -282,7 +298,7 @@
 					    </div>
 					</div>
 					<p>
-						With mutations, we get more interesting networks that depict the genetic relationships between pathogens! You might even see a new genotype spreading, like the pathogens depicted with dark blue nodes. 
+						With mutations, we get more interesting networks that depict the genetic relationships between pathogens! You might even see a new genotype spreading, like the pathogens pictured above with dark blue nodes. 
 					</p>
 					<p>
 						Let's turn the Phylogenetic Netowrk on in our simulation now. 
@@ -353,15 +369,13 @@
 			    			</tr>
 			    		</tbody>
 			    	</table>
-				    <p>
-				    	I've also brought back the contact graph, where each node represents an agent, and an edge depicts a contact that happened between those two agents in the last 7 days of the simulation. The nodes in the contact graph will also change colors so you can see the spread of the pathogen!
-					</p>
+
 				</article>
 
 
 			</div>
 
-			<div uk-height-viewport>
+			<div uk-height-viewport class="uk-margin-xlarge-top">
 				<article class="uk-article">
 
 				    <h1 class="uk-article-title"><a class="uk-link-reset" href="">Mutant Pathogens</a></h1>
@@ -386,6 +400,7 @@
 				    	It's easy to imagine seeing these patterns in real life and attributing them to functional adaptations. However, in the case of SARS-CoV-2, there's really no evidence that we're facing multiple strains. Of course, that might change. We're probably all getting used to feeling like things we learned a week ago are already outdated. When science and science reporting moves at the speed of a pandemic, we're all going to have to learn how to pivot quickly. 
 
 				    </p>
+
 				    <p>
 				    	But for now, we can get back to arguing about whether viruses are alive or not.
 				    </p>
@@ -408,35 +423,20 @@
 			    		</table>
 				</article>
 
-
+			</div>
 		</div>
 		<div class="uk-width-1-6 uk-flex-column uk-flex-right uk-margin-xlarge-top uk-margin-large-left ">
 		    <ul class="uk-nav uk-nav-default" uk-scrollspy-nav="closest: li; scroll: true; offset:500" uk-sticky="offset: 50">
 	    		<li><a href="#page1">An Evolving Pandemic</a></li>
-	    		<li><a href="#page2">It's a Small World</a></li>
-	    		<li><a href="#page3">Local Movement</a></li>
-	    		<li><a href="#page4">Global Movement</a></li>
-	    		<li><a href="#page5">Small World Pandemic</a></li>
-	    		<li><a href="#page6">Visualizing Genetic Relatedness</a></li>
-	    		<li><a href="#page7">Mutant Pathogens</a></li>
-
+	    		<li><a href="#page2">Visualizing Variation</a></li>
+	    		<li><a href="#page3">Visualizing Descent</a></li>
+	    		<li><a href="#page4">It's (Still) a Small World</a></li>
+	    		<li><a href="#page5">Mutant Pathogens</a></li>
 			</ul>
-
 		</div>
 	</div>
 
 	<script src="bundle_evosim.js" charset="UTF-8"></script>
 	</body>
 </html>
-
-<!-- 				    							
-
-A new <b>Genotype</b>, which is another way of saying a virus that is carying at least one distinguishing mutation, is likely increasing in frequency just because it happened to be the lucky one that started an outbreak in a new location. This genotype's lucky break is an example of something we call <b>Founder Effects</b> in ecology and evolutionary biology. 
-						<p>
-						An error like claiming there is a new SARS-CoV-2 strain circulating would have been caught during the typical peer review process, where a paper gets evaluated by a handfull of experts. If it somehow managed to get past the peer reviewers, at the very least the claims would be challenged in a series of comments published along side the paper. If a science reporter came across this work, they would immediately know there were issues the scientfic community was working through. It's important we don't forget how the scientific process works, and how it relies on building up knowledge on foundations that have been tried and tested over and over.
-					</p>
-					<p>
-						That's the way science communication worked <i>before</i> the pandemic. People are rightfully eagre to hear the latest findings from scientists all over the world collectively trying to understand COVID-19.
-					</p>
-!-->
 
