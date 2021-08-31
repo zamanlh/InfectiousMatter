@@ -17,7 +17,7 @@
     "matter-js": "^0.14.2",
     "matter-wrap": "^0.2.0",
     "plotly.js": "^1.54.0",
-    "three": "^0.116.1",
+    "three": "^0.125.0",
     "uikit": "^3.4.2",
     "uniqid": "^5.2.0",
     "vivagraphjs": "^0.12.0"
