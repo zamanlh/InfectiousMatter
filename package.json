@@ -16,7 +16,7 @@
     "matter-collision-events": "^0.1.7",
     "matter-js": "^0.14.2",
     "matter-wrap": "^0.2.0",
-    "plotly.js": "^1.54.0",
+    "plotly.js": "^1.58.5",
     "three": "^0.125.0",
     "uikit": "^3.4.2",
     "uniqid": "^5.2.0",
